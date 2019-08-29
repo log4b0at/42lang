@@ -1,0 +1,6 @@
+
+main(int ac, char **av): int
+{
+	print(&"Hello World!");
+	return (0);
+}

@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "lib": ["es2016"]
+    },
+    "include": [
+        "src/**/*",
+        "srcs/*.ts",
+        "srcs/**/*.ts", "srcs/speadtable.js"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
