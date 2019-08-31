@@ -1,4 +1,5 @@
-function gen_table(table_part, default_value)
+function
+gen_table(table_part, default_value)
 {
 	const table = new Array(256);
 	for(let i = 0; i < 256; i++)
@@ -11,7 +12,8 @@ function gen_table(table_part, default_value)
 	return table;
 }
 
-function code_tables(tables, default_table_name)
+function
+build_state_table(tables, default_table_name)
 {
 	let i = 0; let result = []; let v = 0;
 	
@@ -57,7 +59,8 @@ function code_tables(tables, default_table_name)
 	return result;
 }
 
-function gen_c_code( code_table ) 
+function 
+gen_c_code( code_table ) 
 {
 
 	let size = 0;
@@ -70,7 +73,7 @@ function gen_c_code( code_table )
 	
 	const unit = 4; // 32 bits = 4bytes
 
-	let c_code = `/* (size=${Math.round(size*unit/1000, 1)}kb)*/`;
+	let c_code = `/* (size=${Math.round(size*unit/1000)}kb)*/`;
 	
 	for(const i in code_table)
 	{
@@ -93,7 +96,8 @@ function gen_c_code( code_table )
 }
 
 
-function range(start, end, value)
+function
+range(start, end, value)
 {
 	const result_object = {};
 	const start_from = start.charCodeAt(0);
@@ -107,7 +111,8 @@ function range(start, end, value)
 	return result_object;
 }
 
-function chains(elements, default_object, gen_goal )
+function
+chains(elements, default_object, gen_goal )
 {
 	const chain = {};
 	const states = {};
@@ -143,4 +148,4 @@ function chains(elements, default_object, gen_goal )
 	return { chain, states, generated_states };
 }
 
-module.exports = {gen_table, code_tables, range, chains, gen_c_code};
+module.exports={gen_c_code, chains, gen_table, range, build_state_table};

@@ -9,7 +9,7 @@
     "include": [
         "src/**/*",
         "srcs/*.ts",
-        "srcs/**/*.ts", "srcs/speadtable.js"
+        "srcs/**/*.ts"
     ],
     "exclude": [
         "node_modules"

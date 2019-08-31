@@ -26,7 +26,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	mode: "developpment",
-	entry: "./srcs/main.ts",
+	entry: "./srcs/main.js",
 	target: "node",
 	module: {
 		rules: [
@@ -59,6 +59,10 @@ module.exports = {
 	output: {
 		chunkFilename: '[name].js',
 		filename: '[name].js'
+	},
+
+	node: {
+		__dirname: false
 	},
 
 	mode: 'development',

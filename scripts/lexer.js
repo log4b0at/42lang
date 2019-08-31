@@ -1,4 +1,4 @@
-import { range, chains } from "./speadtable";
+const { range, chains } = require("./state_machine.js");
 
 const hex = hx => String.fromCharCode(parseInt(hx, 16));
 
@@ -18,7 +18,7 @@ const identifier =
 };
 
 const operator_list = [
-	'-', '--', '+', '++', '(', ')','[',']','{','}','*','/',',','.',';',':','!','>','>=','>>','>>>','~','&','&&','|','||','^',
+	'-', '--', '+', '++', '(', ')','[',']','{','}','*','/',',','.',';',':','!','>','>=','>>','~','&','&&','|','||','^',
 	'==', '!=', '<', '<=', '<<', '=>', '?', '**', '=',
 	'-=', '+=', '*=', '/=', '%=', '>>=', '<<=', '>>>=', '&=', '|=', '^=', '**='
 ];
@@ -78,20 +78,16 @@ operators.states['|@chain']['|'] = nc_optoken('||');
 
 operators.states['>@chain']['='] = nc_optoken('>=');
 operators.states['>>@chain']['='] = nc_optoken('>>=');
-operators.states['>>@chain']['>'] = nc_optoken('>>>');
 
 operators.states['<@chain']['='] = nc_optoken('<=');
 operators.states['<<@chain']['='] = nc_optoken('<<=');
 
 operators.states['=@chain']['>'] = nc_optoken('=>');
-operators.states['==@chain']['='] = nc_optoken('===');
 
 operators.states['!=@chain']['='] = nc_optoken('!==');
 operators.states['^@chain']['='] = nc_optoken('^=');
 
 operators.states['.@chain'] = Object.assign( operators.states['.@chain'], range('0', '9', "float_number"));
-
-console.log(operators.states['&@chain'])
 
 const keyword_list = ["of","do","if","in","for","let","new","try","var","case","else","enum","eval","null","this","void","with",
 "await","break","catch","class","const","false","super","throw","while","yield","delete","export","import","public","return",
@@ -113,28 +109,14 @@ const INIT = {
 	'\f': "whitespace",
 	'"': "dq_string",
 	'\'': "sq_string",
-	'`': "format_string",
 	'0': "prefixed_number",
 	...range('1', '9', "number"),
 	default: "FINAL_STATE"
 };
 
 
-export default {
+module.exports = {
 	INIT: INIT,
-	
-	REGEXBACKLOOKING_INIT:
-	{
-		...INIT,
-		'/': "REGEXBACKLOOKING_START"
-	},
-	
-	REGEXBACKLOOKING_START: {
-		'/': "singleline_comment",
-		'*': "multiline_comment",
-		default: "regex"
-	},
-	
 	
 	identifier: identifier,
 	
@@ -249,17 +231,6 @@ export default {
 		default: "sq_string"
 	},
 	
-	format_string: {
-		'`': "TOKEN_FORMAT_STRING",
-		'\\': "format_string_escape",
-		'\0': "FINAL_STATE",
-		default: "format_string",
-	},
-	
-	format_string_escape: {
-		default: "format_string"
-	},
-	
 	sq_string_escape: {
 		default: "sq_string"
 	},
@@ -267,20 +238,6 @@ export default {
 	dq_string_escape: {
 		default: "dq_string"
 	},
-	
-	regex: {
-		'\\': "regex_escape",
-		'/': "regex_end",
-		default: "regex"
-	},
-	
-	regex_escape: { default: "regex" },
-	regex_end: {
-		...range('a', 'z', "regex_end"),
-		...range('A', 'Z', "regex_end"),
-		default: "TOKEN_REGEX"
-	},
-	
 	
 	...keywords.states,
 	
@@ -295,21 +252,14 @@ export default {
 	TOKEN_EXPOSANT_NUMBER: null,
 	TOKEN_EXPOSANT_FLOAT_NUMBER: null,
 	TOKEN_IDENTIFIER: null,
-	TOKEN_REGEX: null,
-	
 	...keywords.generated_states,
-	
 	...operators.generated_states,
-	
-	TOKEN_STRING: null,
-	TOKEN_FORMAT_STRING: null,
-	
-	...nc_optokens,
-	
-	IGNORE_STATE: null,
-	
 	TOKEN_WHITESPACE: null,
+
+	FORWARDLOOK_NEEDED: null,
+
+	TOKEN_STRING: null,
+	...nc_optokens,
 	TOKEN_MULTILINE_COMMENT: null,
 	TOKEN_SINGLELINE_COMMENT: null,
-
 };

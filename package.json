@@ -7,7 +7,9 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+	"watch": "npx webpack --watch --config webpack.dev.js",
+	"test": "node dist/main.js ../examples/hello.42",
+	"build": "npx webpack --config webpack.dev.js"
   },
   "keywords": [
     "42",
