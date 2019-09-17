@@ -49,12 +49,6 @@ class RenaultZoe
 {
   uint position_x = 0;
   
-  drive(Driver driver)
-  {
-    if (driver.skill > 6)
-      position += 2;
-    else
-      position++;
-  }
+  drive(Driver driver){}
 }
 ```
