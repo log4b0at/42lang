@@ -24,7 +24,7 @@ Voici les caractéristiques imposées par moi-même concernant le compilateur;
 - Performance dans le temps de compilation
 - Liberté sur le choix du langage d'implémentation (Langages compilés uniquement)
 ### Interpréteur
-Même chose que pour le compilateur, à exception que le langage d'implémentation pourrait être interprété.
+Même chose pour l'interpréteur à l'exception que le langage d'implémentation pourrait être interprété.
 
 ## Syntaxe actuellement proposée
 
@@ -43,9 +43,11 @@ until(i >= str.length)
 	print(str[i++]);
 }
 ```
-Protocoles d'itération spécifiques, la boucle for devient une fonction relevant de l'objet concerné
+Protocoles d'itération spécifiques, la boucle for devient une fonction relevant de l'objet concerné.
+Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
 ```
 array.for(callback);
+array.each(callback);
 ```
 ### Fonction
 Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et optionnellement une déclaration
@@ -76,7 +78,7 @@ main: int
 	else
 		status = 1;
 	
-	ret status;
+	ret int status;
 }
 ```
 
@@ -93,7 +95,29 @@ main: bool
 }
 ```
 
+### Les pointeurs et les flags
+Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
 
+La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
+
+Exemple avec la fonction malloc.
+```
+ptr pointer = malloc(8);
+```
+La notation avec le type 'Pointer' permet de stocker des informations concernant la cible du pointeur.
+On peut l'écrire directement avec un astérix avant le type cible.
+```
+Pointer<Object> pointer = malloc(ptr.size);
+*Object pointer = malloc(ptr.size);
+```
+Des fois il est utile ou nécessaire d'avoir plus d'information concernant le type ciblé par un pointeur.
+- Nullable noté '?'
+- Immutable noté '!'
+```
+?!Object pointer = malloc(Object.size);
+```
+> L'ordre d'apparition des flags est injonctif.
+> Les flags ne s'applique qu'aux pointeurs.
 ### Declaration
 
 Syntaxe d'une déclaration:
@@ -113,9 +137,9 @@ Syntaxe d'une déclaration:
 - Le mot clé "type" détermine le type de la déclaration 
 - La déclaration en elle-même
 
-> Tout les mots clés et outils sont optionnels
+> Tout les mots clés et outils sont optionnels.
 
-> L'ordre d'apparition des mots clés et outils est injonctif
+> L'ordre d'apparition des mots clés et outils est injonctif.
 
 
 Exemple
