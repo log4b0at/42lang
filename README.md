@@ -146,6 +146,8 @@ else
 ```
 Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
 Il en conclu que le `else` appartient au `if` parent.
+
+La méthode est analogue avec des `if` d'une et unique instruction.
 ### Declaration
 
 Syntaxe:
