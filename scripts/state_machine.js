@@ -20,15 +20,19 @@ build_state_table(tables, default_table_name)
 	for(const table_name in tables)
 	{
 		const table_part = tables[table_name];
-		if(table_part === null)
+		if(table_part === "token" || table_part === "marker" || !table_part)
 		{
-			tables[table_name] = {'__null': true, index: (i-v)*256+v};
-			v++;
+			tables[table_name] = {__type: table_part, __null: true, index: (i-v)*256+v};
+			if (table_part === "token")
+			{
+				v++;
+				i++;
+			}
 		}
 		else {
 			table_part.index = i*256;
+			i++;
 		}
-		i++;
 	}
 	
 	
@@ -37,7 +41,7 @@ build_state_table(tables, default_table_name)
 		const table_part = tables[table_name];
 		if(table_part.__null === true) 
 		{ 
-			result[table_name] = {state_index: table_part.index, matrix:null};
+			result[table_name] = {type: table_part.__type, state_index: table_part.index, matrix:null};
 			continue;
 		}
 		const table = gen_table(table_part, table_part.default || default_table_name);
@@ -73,7 +77,9 @@ gen_c_code( code_table )
 	
 	const unit = 4; // 32 bits = 4bytes
 
-	let c_code = `/* (size=${Math.round(size*unit/1000)}kb)*/`;
+	let c_code = `/* (size=${Math.round(size*unit/1000)}kb)*/\n`;
+
+	c_code += "int	state_table[] = {";
 	
 	for(const i in code_table)
 	{
@@ -89,9 +95,71 @@ gen_c_code( code_table )
 				
 				c_code += matrix[j]+', ';
 			}
-		} else c_code += `\n/* state "${i}" (fake_offset=${table.state_index}) */`;
+		}
+		else if (table.type === "marker")
+		{
+			c_code += `\n/* marker "${i}" (fake_offset=${table.state_index}) */`;
+		}
+		else if (table.type === "token")
+		{
+			c_code += `\n/* token "${i}" (fake_offset=${table.state_index}) */`;
+		}
 	}
+
+	c_code += "\n};\n\nchar	*tokens_labels[] = {\n";
+
+	let k = 0;
+	const labels = [];
+	for(const i in code_table)
+	{
+		const table = code_table[i];
+		const matrix = table.matrix;
+		if (table.type === "token")
+		{
+			labels.push('\t"'+ i + "\" /* "+ k + " */");
+			k++;
+		}
+	}
+
+	c_code += labels.join(",\n")/*.replace('%', '\\%')*/;
+
+	c_code += "};";
 	
+	return c_code;
+}
+
+function
+is_alpha(str)
+{
+	let i = 0;
+
+	while (i < str.length)
+	{
+		const c = str[i].charCodeAt(0);
+		if ((c < 65 || c > 90) && (c < 98 || c > 122) && c != 95)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+function 
+gen_c_header( code_table, other_stuff = [] ) 
+{
+	let c_code = `#ifndef STATE_TABLE_H\n\n# define STATE_TABLE_H\n\n`;
+	
+	for(const i in code_table)
+	{
+		const table = code_table[i];
+		const matrix = table.matrix;
+		
+		// macros cant have other symbols than alphas and underscore
+		if (matrix === null && is_alpha(i) || other_stuff.includes(i))
+			c_code += `# define ${i} ${table.state_index}\n`;
+	}
+
+	c_code += "\n#endif\n";
+
 	return c_code;
 }
 
@@ -135,7 +203,7 @@ chains(elements, default_object, gen_goal )
 			{
 				const generated = gen_goal(element);
 				state[ 'default' ] = generated;
-				generated_states[ generated ] = null;
+				generated_states[ generated ] = "token";
 			}
 			else 
 			{
@@ -148,4 +216,4 @@ chains(elements, default_object, gen_goal )
 	return { chain, states, generated_states };
 }
 
-module.exports={gen_c_code, chains, gen_table, range, build_state_table};
+module.exports={gen_c_code, gen_c_header, chains, gen_table, range, build_state_table};

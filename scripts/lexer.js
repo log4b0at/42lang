@@ -19,11 +19,11 @@ const identifier =
 
 const operator_list = [
 	'-', '--', '+', '++', '(', ')','[',']','{','}','*','/',',','.',';',':','!','>','>=','>>','~','&','&&','|','||','^',
-	'==', '!=', '<', '<=', '<<', '=>', '?', '**', '=',
-	'-=', '+=', '*=', '/=', '%=', '>>=', '<<=', '>>>=', '&=', '|=', '^=', '**='
+	'==', '!=', '<', '<=', '<<', '=>', '?', '=',
+	'-=', '+=', '*=', '/=', '%=', '>>=', '<<=', '&=', '|=', '^=', '**='
 ];
 
-const contraignant_operators = ['==', '!=', '-', '.', '+', '<', '<<' , '>', '>>', '*', '/', '%', '^', '!', '=', '&', '|', '**'];
+const contraignant_operators = ['==', '!=', '-', '.', '+', '<', '<<' , '>', '>>', '*', '/', '%', '^', '!', '=', '&', '|'];
 
 
 const nc_optokens = {};
@@ -31,7 +31,7 @@ const nc_optokens = {};
 /* And a non contraignant operator state, and get his table identifier */
 const nc_optoken =  element => { 
 	const table_id = "TOKEN_OPERATOR_"+element ;
-	nc_optokens[table_id] = null;
+	nc_optokens[table_id] = "token";
 	return table_id;
 };
 
@@ -59,14 +59,17 @@ operators.states['+@chain']['='] = nc_optoken('+=');
 operators.states['+@chain']['+'] = nc_optoken('++');
 
 operators.states['*@chain']['='] = nc_optoken('*=');
-operators.states['**@chain']['='] = nc_optoken('**=');
 
 operators.states['/@chain']['='] = nc_optoken('/=');
 operators.states['/@chain']['*'] = "multiline_comment";
 operators.states['/@chain']['/'] = "singleline_comment";
 
 operators.states['/@chain'][' '] = operators.states['/@chain'].default;
-operators.states['/@chain'][' '] = operators.states['/@chain'].default;
+operators.states['/@chain']['\n'] = operators.states['/@chain'].default;
+operators.states['/@chain']['\t'] = operators.states['/@chain'].default;
+operators.states['/@chain']['\f'] = operators.states['/@chain'].default;
+operators.states['/@chain']['\r'] = operators.states['/@chain'].default;
+operators.states['/@chain']['\v'] = operators.states['/@chain'].default;
 
 operators.states['%@chain']['='] = nc_optoken('%=');
 
@@ -89,15 +92,13 @@ operators.states['^@chain']['='] = nc_optoken('^=');
 
 operators.states['.@chain'] = Object.assign( operators.states['.@chain'], range('0', '9', "float_number"));
 
-const keyword_list = ["of","do","if","in","for","let","new","try","var","case","else","enum","eval","null","this","void","with",
-"await","break","catch","class","const","false","super","throw","while","yield","delete","export","import","public","return",
-"static","switch","typeof","default","extends","finally","package","private","continue","debugger","function","arguments",
-"interface","protected","implements","instanceof"];
+const keyword_list = ["if", "else", "while", "until", "struct", "return",
+"unsigned", "int", "float", "short", "long", "double", "char"];
 
 const keywords = chains(keyword_list, identifier, element => "TOKEN_KEYWORD_"+element.toUpperCase());
 /*const operators = chains(operator_list, {}, element => "TOKEN_OPERATOR_"+element);*/
 
-const INIT = {
+const INIT_STATE = {
 	...identifier,
 	...keywords.chain,
 	...operators.chain,
@@ -107,6 +108,7 @@ const INIT = {
 	'\n': "whitespace",
 	'\r': "whitespace",
 	'\f': "whitespace",
+	'\v': "whitespace",
 	'"': "dq_string",
 	'\'': "sq_string",
 	'0': "prefixed_number",
@@ -116,46 +118,16 @@ const INIT = {
 
 
 module.exports = {
-	INIT: INIT,
+	INIT_STATE: INIT_STATE,
 	
+	RECORD_NEEDED: "marker",
+
 	identifier: identifier,
 	
 	identifier_utf8_2B: { default: "identifier" },
 	identifier_utf8_3B: { default: "identifier_utf8_2B" },
 	identifier_utf8_4B: { default: "identifier_utf8_3B" },
-	
-	whitespace: {
-		' ': "whitespace",
-		'\t': "whitespace",
-		'\n': "whitespace",
-		'\r': "whitespace",
-		'\f': "whitespace",
-		default: "TOKEN_WHITESPACE"
-	},
 
-	
-	multiline_comment: {
-		'*': "end0_multiline_comment",
-		'\0': "FINAL_STATE",
-		default: "multiline_comment"
-	},
-	
-	end0_multiline_comment: {
-		'/': "end1_multiline_comment",
-		'\0': "FINAL_STATE",
-		default: "multiline_comment"
-	},
-	
-	end1_multiline_comment: {
-		default: "TOKEN_MULTILINE_COMMENT"
-	},
-	
-	singleline_comment: {
-		'\n': "TOKEN_SINGLELINE_COMMENT",
-		'\0': "FINAL_STATE",
-		default: "singleline_comment"
-	},
-	
 	prefixed_number: {
 		'o': "oct_number",
 		'x': "hex_number",
@@ -238,28 +210,71 @@ module.exports = {
 	dq_string_escape: {
 		default: "dq_string"
 	},
+
+	RECORD_NOTNEEDED: "marker",
+	
+	whitespace: {
+		' ': "whitespace",
+		'\t': "whitespace",
+		'\n': "whitespace",
+		'\r': "whitespace",
+		'\f': "whitespace",
+		default: "TOKEN_WHITESPACE"
+	},
+	
+	multiline_comment: {
+		'*': "end0_multiline_comment",
+		'\0': "FINAL_STATE",
+		default: "multiline_comment"
+	},
+	
+	end0_multiline_comment: {
+		'/': "end1_multiline_comment",
+		'\0': "FINAL_STATE",
+		default: "multiline_comment"
+	},
+	
+	end1_multiline_comment: {
+		default: "TOKEN_MULTILINE_COMMENT"
+	},
+	
+	singleline_comment: {
+		'\n': "TOKEN_SINGLELINE_COMMENT",
+		'\0': "FINAL_STATE",
+		default: "singleline_comment"
+	},
 	
 	...keywords.states,
 	
 	...operators.states,
 	
-	FINAL_STATE: null,
-	TOKEN_NUMBER: null,
-	TOKEN_BIN_NUMBER: null,
-	TOKEN_OCT_NUMBER: null,
-	TOKEN_HEX_NUMBER: null,
-	TOKEN_FLOAT_NUMBER: null,
-	TOKEN_EXPOSANT_NUMBER: null,
-	TOKEN_EXPOSANT_FLOAT_NUMBER: null,
-	TOKEN_IDENTIFIER: null,
+	FINAL_STATE: "token",
+
+	RECORD_NEEDED_TOKENS: "marker",
+
+	TOKEN_NUMBER: "token",
+	TOKEN_BIN_NUMBER: "token",
+	TOKEN_OCT_NUMBER: "token",
+	TOKEN_HEX_NUMBER: "token",
+	TOKEN_FLOAT_NUMBER: "token",
+	TOKEN_EXPOSANT_NUMBER: "token",
+	TOKEN_EXPOSANT_FLOAT_NUMBER: "token",
+	TOKEN_IDENTIFIER: "token",
+
+	RECORD_NOTNEEDED_TOKENS: "marker",
+
 	...keywords.generated_states,
 	...operators.generated_states,
-	TOKEN_WHITESPACE: null,
+	TOKEN_WHITESPACE: "token",
 
-	FORWARDLOOK_NEEDED: null,
+	FORWARDLOOK_NEEDED: "marker",
 
-	TOKEN_STRING: null,
+	TOKEN_STRING: "token",
 	...nc_optokens,
-	TOKEN_MULTILINE_COMMENT: null,
-	TOKEN_SINGLELINE_COMMENT: null,
+
+	RECORD_STATE: "token",
+
+	IGNORE_STATE: "token",
+	TOKEN_MULTILINE_COMMENT: "token",
+	TOKEN_SINGLELINE_COMMENT: "token",
 };

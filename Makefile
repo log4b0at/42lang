@@ -1,7 +1,7 @@
 SRCS_DIR	= srcs
 OBJS_DIR	= objs
-OUT_DIR 	= dist
 INC_DIR		= includes
+SCRIPTS_DIR	= scripts
 
 NAME		= ftlang
 SRCS		= $(wildcard $(SRCS_DIR)/$(NAME)/*.c)
@@ -18,16 +18,19 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
-all: $(LEXER_NAME)
+all: $(SRCS_DIR)/$(LEXER_NAME)/state_table.c $(LEXER_NAME)
 
 $(LEXER_NAME): $(UTILS_OBJS) $(LEXER_OBJS)
-	$(CC) $(CFLAGS) $(UTILS_OBJS) $(LEXER_OBJS) -o $(OUT_DIR)/$(LEXER_NAME)
+	$(CC) $(CFLAGS) $(UTILS_OBJS) $(LEXER_OBJS) -o $(LEXER_NAME)
 
 $(NAME): $(UTILS_OBJS) $(OBJS)
-	$(CC) $(CFLAGS) $(UTILS_OBJS) $(OBJS) -o $(OUT_DIR)/$(NAME)
+	$(CC) $(CFLAGS) $(UTILS_OBJS) $(OBJS) -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR)
+
+$(SRCS_DIR)/$(LEXER_NAME)/state_table.c: $(SCRIPTS_DIR)/gen_state_table.js $(SCRIPTS_DIR)/lexer.js $(SCRIPTS_DIR)/state_machine.js
+	node ./$(SCRIPTS_DIR)/gen_state_table.js
 
 clean:
 	$(RM) -r $(UTILS_OBJS) $(LEXER_OBJS) $(OBJS)

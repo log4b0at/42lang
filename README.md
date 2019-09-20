@@ -28,27 +28,102 @@ Même chose que pour le compilateur, à exception que le langage d'implémentati
 
 ## Syntaxe actuellement proposée
 
-Syntaxe d'une déclaration de type.
+### Boucle et itération
+La boucle while, vérifiant itérativement une expression vraie:
+```
+while(i < str.length)
+{
+	print(str[i++]);
+}
+```
+La boucle until, vérifiant itérativement une expression fausse:
+```
+until(i >= str.length)
+{
+	print(str[i++]);
+}
+```
+Protocoles d'itération spécifiques, la boucle for devient une fonction relevant de l'objet concerné
+```
+array.for(callback);
+```
+### Fonction
+Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et optionnellement une déclaration
+```
+main(int ac, **char av): int
+{
+	ret 0;
+}
+```
+Analoguement une procédure sans type de retour ni argument pourra être déclaré de la façon suivante
+```
+someprocedure
+{
+	print(&"Hello");
+}
+```
+### Variable et cast
+
+Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
 
 ```
-[etiquette...] [EXPORT]
-[TEMPLATE '<' reference... '>']
-[PATTERN | IMPL reference...]
+main: int
+{
+	uint exitstatus;
+
+	if (globalvar < 50)
+		status = 0;
+	else
+		status = 1;
+	
+	ret status;
+}
+```
+
+Le cast est noté sans parenthèses, écrit comme une instruction le cast change le type de la variable,
+écrit comme une expression le cast n'affecte pas le type de la variable, seulement le résultat de l'expression.
+Cast avec perte d'information successive:
+
+```
+main: bool
+{
+	long variable = 2147483649;
+
+	ret bool char short int variable;
+}
+```
+
+
+### Declaration
+
+Syntaxe d'une déclaration:
+
+```
+[annotation...] [EXPORT]
+[MODEL]
+[TEMPLATE '<' types... '>']
+[IMPL patterns...]
 [TYPE primitive] (function|enum|class|union)
 ```
+- Les annotations servent a référencer la documentation ou des meta informations concernant la déclaration
+- Le mot clé "export" rend accessible la déclaration depuis une importation externe
+- Le mot clé "model" signifit que la déclaration servira de modèle d'implémentation (analogue aux interfaces)
+- L'outil "template" permet de paramétrer la déclaration
+- L'outil "impl" permet d'implémenter un ou plusieurs modèles
+- Le mot clé "type" détermine le type de la déclaration 
+- La déclaration en elle-même
+
+> Tout les mots clés et outils sont optionnels
+
+> L'ordre d'apparition des mots clés et outils est injonctif
+
 
 Exemple
-```java
-@CustomDescription("Voiture électrique zoé") 
-// Les étiquettes peuvent prendre un token en paramètre, exemple une string, un nombre, un identifiant.
+```
+@description("A Car class") 
 export
 template<MotorType>
 impl Drivable
 type ptr
-class RenaultZoe
-{
-  uint position_x = 0;
-  
-  drive(Driver driver){}
-}
+class Car { }
 ```

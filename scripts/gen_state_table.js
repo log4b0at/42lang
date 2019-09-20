@@ -1,16 +1,15 @@
-const { build_state_table, gen_c_code } = require("./state_machine.js");
+const { build_state_table, gen_c_code, gen_c_header } = require("./state_machine.js");
 const lexer = require("./lexer");
 
 const readline = require('readline'),
 	fs = require('fs'), path = require('path'), util = require('util');
 
-const decoder = new util.TextDecoder("utf-8");
-
 const lexer_model = lexer;
 
 const state_table = build_state_table(lexer_model, 'FINAL_STATE');
 
-fs.writeFileSync("./srcs/state_table.c", "int	state_table[] = {" + gen_c_code(state_table) + "};");
+fs.writeFileSync("./srcs/ftlex/state_table.c", gen_c_code(state_table));
+fs.writeFileSync("./includes/state_table.h", gen_c_header(state_table, ['INIT_STATE']));
 
 /*function lex( state_table )
 {
