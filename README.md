@@ -97,9 +97,7 @@ main: bool
 
 ### Les pointeurs et les flags
 Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
-
 La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
-
 Exemple avec la fonction malloc.
 ```
 ptr pointer = malloc(8);
@@ -111,8 +109,9 @@ Pointer<Object> pointer = malloc(ptr.size);
 *Object pointer = malloc(ptr.size);
 ```
 Des fois il est utile ou nécessaire d'avoir plus d'information concernant le type ciblé par un pointeur.
-- Nullable noté '?'
-- Immutable noté '!'
+Il est possible d'utiliser les flags suivants:
+- Nullable noté `?`
+- Immutable noté `!`
 ```
 ?!Object pointer = malloc(Object.size);
 ```
@@ -120,7 +119,7 @@ Des fois il est utile ou nécessaire d'avoir plus d'information concernant le ty
 > Les flags ne s'applique qu'aux pointeurs.
 ### Declaration
 
-Syntaxe d'une déclaration:
+Syntaxe:
 
 ```
 [annotation...] [EXPORT]
@@ -129,7 +128,18 @@ Syntaxe d'une déclaration:
 [IMPL patterns...]
 [TYPE primitive] (function|enum|class|union)
 ```
-- Les annotations servent a référencer la documentation ou des meta informations concernant la déclaration
+
+Exemple:
+```
+@description("A Car class") 
+export
+template<MotorType>
+impl Drivable
+type ptr
+class Car { }
+```
+
+- Les annotations servent a référencer des meta-informations concernant la déclaration
 - Le mot clé "export" rend accessible la déclaration depuis une importation externe
 - Le mot clé "model" signifit que la déclaration servira de modèle d'implémentation (analogue aux interfaces)
 - L'outil "template" permet de paramétrer la déclaration
@@ -140,14 +150,3 @@ Syntaxe d'une déclaration:
 > Tout les mots clés et outils sont optionnels.
 
 > L'ordre d'apparition des mots clés et outils est injonctif.
-
-
-Exemple
-```
-@description("A Car class") 
-export
-template<MotorType>
-impl Drivable
-type ptr
-class Car { }
-```
