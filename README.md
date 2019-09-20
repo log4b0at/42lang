@@ -129,7 +129,6 @@ main: int
 ```
 > Le `else` sera obligatoire si il s'agit d'une expression.
 #### Else dangling
-Pour eviter les erreurs else-dangling vous pouvez utiliser le point-virgule à la fin des "if" ne possédant pas de else.
 ```
 if (cond1)
 	if (cond2)
@@ -137,8 +136,7 @@ if (cond1)
 	else
 		{ action2(); }
 ```
-Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
-Il en conclu que le `else` appartient au `if` parent.
+Pour eviter les erreurs de else-dangling vous pouvez utiliser le point-virgule à la fin des "if" ne possédant pas de else.
 ```
 if (cond1)
 	if (cond2)
@@ -146,6 +144,8 @@ if (cond1)
 else
 	{ action2(); }
 ```
+Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
+Il en conclu que le `else` appartient au `if` parent.
 ### Declaration
 
 Syntaxe:
