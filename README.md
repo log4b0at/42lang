@@ -117,6 +117,35 @@ Il est possible d'utiliser les flags suivants:
 ```
 > L'ordre d'apparition des flags est injonctif.
 > Les flags ne s'applique qu'aux pointeurs.
+### Condition & Branching
+L'instruction `if` peut être utilisé comme expression.
+Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
+
+```
+main: int
+{
+	ret if(condition) ret 5 else ret 2;
+}
+```
+> Le `else` sera obligatoire si il s'agit d'une expression.
+#### Else dangling
+Pour eviter les erreurs else-dangling vous pouvez utiliser le point-virgule à la fin des "if" ne possédant pas de else.
+```
+if (cond1)
+	if (cond2)
+		{ action1(); }
+	else
+		{ action2(); }
+```
+Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
+Il en conclu que le `else` appartient au `if` parent.
+```
+if (cond1)
+	if (cond2)
+		{ action1(); };
+else
+	{ action2(); }
+```
 ### Declaration
 
 Syntaxe:
