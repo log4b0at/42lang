@@ -43,7 +43,9 @@ until(i >= str.length)
 	print(str[i++]);
 }
 ```
-Protocoles d'itération spécifiques, la boucle for devient une fonction relevant de l'objet concerné.
+#### Protocoles d'itération spécifiques
+La boucle for devient une fonction relevant de l'objet concerné.
+
 Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
 ```
 array.for(callback);
@@ -95,6 +97,22 @@ main: bool
 }
 ```
 
+### Marquage des variables
+#### Constance
+```
+const char a = "A";
+```
+Marqué du mot clé `const` la ré-assignation de la variable est prohibée.
+#### Volatilité
+````
+volatile char a = "A";
+````
+Marqué du mot clé `volatile`, aucune optimisation ne sera faite.
+#### Staticité
+````
+static char a = "A";
+````
+Marqué du mot clé `static`, la variable sera traité comme globale.
 ### Les pointeurs et les flags
 Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
 La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
@@ -114,9 +132,15 @@ Il est possible d'utiliser les flags suivants:
 - Immutable noté `!`
 ```
 ?!Object pointer = malloc(Object.size);
+!*char string = &"Immutable string";
 ```
 > L'ordre d'apparition des flags est injonctif.
 > Les flags ne s'applique qu'aux pointeurs.
+#### Séquentialité du pointage
+````
+!*[3]char a = &"abc";
+````
+`a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence.
 ### Condition & Branching
 L'instruction `if` peut être utilisé comme expression.
 Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
