@@ -1,7 +1,7 @@
 # 42lang
 Voici mon projet de création d'un langage de programmation haut niveau type C++.
 Le langage se veut plus intuitif et plus simple à prendre en main que C++.
-(PS: Les contributeurs motivés sont les bienvenus 😉)
+Les contributeurs motivés sont les bienvenus.
 
 ## Ma philosophie
 Voici des axiomes que j'essaierais de respecter dans les choix de syntaxe,
@@ -48,8 +48,8 @@ La boucle for devient une fonction relevant de l'objet concerné.
 
 Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
 ```
-array.for(callback);
-array.each(callback);
+list.for(callback);
+list.each(callback);
 ```
 ### Fonction
 Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et optionnellement une déclaration
@@ -71,15 +71,12 @@ someprocedure
 Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
 
 ```
-main: int
-{
+main: int {
 	uint exitstatus;
-
 	if (globalvar < 50)
 		status = 0;
 	else
 		status = 1;
-	
 	ret int status;
 }
 ```
@@ -89,14 +86,35 @@ Le cast est noté sans parenthèses, écrit comme une instruction le cast change
 Cast avec perte d'information successive:
 
 ```
-main: bool
-{
+main: bool {
 	long variable = 2147483649;
-
 	ret bool char short int variable;
 }
 ```
 
+#### Typage automatique
+Le typage automatique se fait en utilisant le mot clé `let` à la place du type.
+```
+let i = 42;			// int
+let i2= 0b0001_1010;// int
+let f = 42.2;		// float
+let c = "H";		// char
+let s = &"Hello";	// !*[5]char
+let o = new Car;	// Car (class)
+let d = Driveable o;// Driveable (model:class)
+```
+Le typage automatique est également effectif lors d'une déclaration de variable ou dans les arguments d'un appel à fonction.
+(Enumérations uniquement)
+```
+enum ABC { A B C };
+f(ABC a) { };
+
+main {
+	ABC a = A;
+	f(B);
+	// 'A' and 'B' aren't global symbols
+}
+```
 ### Marquage des variables
 #### Constance
 ```
@@ -138,13 +156,17 @@ Il est possible d'utiliser les flags suivants:
 > Les flags ne s'applique qu'aux pointeurs.
 #### Séquentialité du pointage
 ````
-!*[3]char a = &"abc";
+const !*[3]char a = &"abc";
 ````
 `a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence.
+#### Séquentialité dynamique
+```
+const *[length+1]char str = new String(length + 1);
+```
+Si la longueur de la séquence est dynamique, renseignez une expression à la place.
 ### Condition & Branching
 L'instruction `if` peut être utilisé comme expression.
 Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
-
 ```
 main: int
 {
