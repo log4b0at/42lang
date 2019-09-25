@@ -75,9 +75,7 @@ Une fonction-template peut être défini à l'aide des pointillet. Par exemple p
 }
 ```
 ### Variable et cast
-
 Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
-
 ```
 main: int {
 	uint exitstatus;
@@ -88,16 +86,15 @@ main: int {
 	ret int status;
 }
 ```
-
-Le cast est noté sans parenthèses, écrit comme une instruction le cast change le type de la variable,
-écrit comme une expression le cast n'affecte pas le type de la variable, seulement le résultat de l'expression.
-Cast avec perte d'information successive:
-
+Le cast est noté sans chevrons si il s'agit d'un type primitif.
+Ecrit comme une instruction le cast change le type de la variable.
+Ecrit comme une expression le cast n'affecte pas le type de la variable, seulement le résultat de l'expression.
 ```
-main: bool {
-	long variable = 2147483649;
-	ret bool char short int variable;
-}
+let object = <Object> malloc(Object.size);
+```
+Pertes d'informations successives:
+```
+let information = (bool char short int variable);
 ```
 
 #### Typage automatique
@@ -109,7 +106,7 @@ let f = 42.2;		// float
 let c = "H";		// char
 let s = &"Hello";	// !*[5]char
 let o = new Car;	// Car (class)
-let d = Driveable o;	// Driveable (model:class)
+let d = <Driveable> o;	// Driveable (class@model)
 ```
 Le typage automatique est également effectif lors d'une déclaration de variable ou dans les arguments d'un appel à fonction.
 (Enumérations uniquement)
@@ -257,8 +254,40 @@ type ptr union Cars { Mercedes Dacia Renault Ford }
 Le type de chaque membre doit correspondre au type de l'union.
 Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
 #### Template
-Les templates permettent de récuperer des tokens
-Elles peuvent être 
+Les templates permettent de récuperer des tokens.
+```
+template<Type>
+class Name {
+	get: Type {
+		ret 42;
+	}
+}
+```
+Utilisation:
+```
+uint num = Name<uint>.new().get();
+```
+#### Modèle
+Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `impl` pour implémenter un modèle.
+
+Voici un exemple de modèle de classe qui jouera le role d'interface.
+```
+model class Interface {
+	int properties;
+	method(int input): int;
+}
+
+class ParentClass {
+	int properties = 42 * 2
+}
+
+impl ParentClass, Interface
+class Class {
+	int properties = 42
+	method(int a): int { ret 42; }
+}
+```
+
 ### Syntaxe générale
 ```
 @sometag("Some token")
@@ -267,11 +296,6 @@ model
 impl Driveable
 type ptr
 class Car { }
-```
-Usage:
-Exemple:
-```
-
 ```
 
 - Les annotations servent a référencer des meta-informations concernant la déclaration
