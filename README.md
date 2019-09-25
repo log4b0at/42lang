@@ -52,7 +52,7 @@ list.for(callback);
 list.each(callback);
 ```
 ### Fonction
-Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et optionnellement une déclaration
+Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et un bloc d'instruction.
 ```
 main(int ac, **char av): int
 {
@@ -64,6 +64,14 @@ Analoguement une procédure sans type de retour ni argument pourra être déclar
 someprocedure
 {
 	print(&"Hello");
+}
+```
+Une fonction-template peut être défini à l'aide des pointillet. Par exemple print:
+```
+...print(int i)
+{
+	let str = itoa(i);
+	write(1, str, strlen(str));
 }
 ```
 ### Variable et cast
@@ -95,13 +103,13 @@ main: bool {
 #### Typage automatique
 Le typage automatique se fait en utilisant le mot clé `let` à la place du type.
 ```
-let i = 42;			// int
-let i2= 0b0001_1010;// int
+let i = 42;		// int
+let i2= 0b0001_1010;	// int
 let f = 42.2;		// float
 let c = "H";		// char
 let s = &"Hello";	// !*[5]char
 let o = new Car;	// Car (class)
-let d = Driveable o;// Driveable (model:class)
+let d = Driveable o;	// Driveable (model:class)
 ```
 Le typage automatique est également effectif lors d'une déclaration de variable ou dans les arguments d'un appel à fonction.
 (Enumérations uniquement)
@@ -161,9 +169,9 @@ const !*[3]char a = &"abc";
 `a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence.
 #### Séquentialité dynamique
 ```
-const *[length+1]char str = new String(length + 1);
+const *[length]char str = "Hello";
 ```
-Si la longueur de la séquence est dynamique, renseignez une expression à la place.
+Si la longueur de la séquence est dynamique, renseignez une expression dans les crochets.
 ### Condition & Branching
 L'instruction `if` peut être utilisé comme expression.
 Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
@@ -194,31 +202,81 @@ Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
 Il en conclu que le `else` appartient au `if` parent.
 
 La méthode est analogue avec des `if` d'une et unique instruction.
-### Declaration
-
-Syntaxe:
-
+### Fonction lambda
+Créer une fonction lamdba en suivant cette syntaxe, sans preciser les types des arguments.
 ```
-[annotation...] [EXPORT]
-[MODEL]
-[TEMPLATE '<' types... '>']
-[IMPL patterns...]
-[TYPE primitive] (function|enum|class|union)
+list.sort((a, b) => if (a < b) ret a else ret b);
 ```
+Les types des arguments sont déterminés par le type du premier argument de la fonction sort.
 
-Exemple:
+Voici comment déclarer une fonction prenant en paramètre une fonction lambda.
 ```
-@description("A Car class") 
-export
-template<MotorType>
-impl Drivable
+model LambdaCallback(int input): int;
+
+call(LambdaCallback callback, int input): int
+{
+	ret callback(input);
+}
+```
+### Déclarations
+#### Classe
+```
+class Car
+{
+	int property = 400
+
+	method: int
+	{
+		ret property
+	}
+}
+```
+Une classe est obligatoirement un type de pointeur, tout comme les fonctions, inutile de le préciser avant la déclaration.
+Pour étendre la classe il faudra implémenter un modèle. Voir l'utilisation des modèles.
+#### Enumération
+```
+type uint
+enum Alphabet
+{
+	A B C D E F G H I J K L M N O P Q R S T U V W X Y
+	Z = 25
+
+	between(Alphabet left, Alphabet right): bool
+	{
+		ret (this >= left && this <= right);
+	}
+}
+```
+Les énumérations comme les classes peuvent posséder des méthodes.
+Aucun outil du type variable iota (comme en Go) n'est disponible pour définir les valeurs des membres d'énumération. 
+Tout se fera manuellement.
+#### Union
+```
+type ptr union Cars { Mercedes Dacia Renault Ford }
+```
+Le type de chaque membre doit correspondre au type de l'union.
+Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
+#### Template
+Les templates permettent de récuperer des tokens
+Elles peuvent être 
+### Syntaxe générale
+```
+@sometag("Some token")
+template<Tokens, Tokens2>
+model
+impl Driveable
 type ptr
 class Car { }
+```
+Usage:
+Exemple:
+```
+
 ```
 
 - Les annotations servent a référencer des meta-informations concernant la déclaration
 - Le mot clé "export" rend accessible la déclaration depuis une importation externe
-- Le mot clé "model" signifit que la déclaration servira de modèle d'implémentation (analogue aux interfaces)
+- Le mot clé "model" signifit que la déclaration servira de modèle d'implémentation
 - L'outil "template" permet de paramétrer la déclaration
 - L'outil "impl" permet d'implémenter un ou plusieurs modèles
 - Le mot clé "type" détermine le type de la déclaration 
