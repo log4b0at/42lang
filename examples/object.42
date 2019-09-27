@@ -1,0 +1,31 @@
+
+model
+class Object
+{
+	static model constructor: self
+	{
+		ret self malloc(self.size);
+	}
+}
+
+/*
+int String_cmp(char* p0, char* p1)
+{
+    register char r0, r1;
+
+    W0:
+    r1 = *p1;
+    if (!r1) goto W0E;
+    r0 = *p0;
+    r0 = r0 == r1;
+    r0 = r0 && r1;
+    if (!r0) goto W0E;
+    p0++;
+    p1++;
+    goto W0;
+    W0E:
+    r0 = *p0;
+    r0 -= r1;
+    return r0;
+}
+*/

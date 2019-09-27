@@ -66,7 +66,7 @@ someprocedure
 	print(&"Hello");
 }
 ```
-Une fonction-template peut être défini à l'aide des pointillet. Par exemple print:
+Une fonction-template peut être défini à l'aide des pointillets. Par exemple print:
 ```
 ...print(int i)
 {
@@ -74,6 +74,50 @@ Une fonction-template peut être défini à l'aide des pointillet. Par exemple p
 	write(1, str, strlen(str));
 }
 ```
+
+### Opérateurs
+#### priorité: 1, associativité: Gauche à droite
+| Opération       | Symbole | Description                |
+| :-------------- | :------ | :------------------------- |
+| Incrémentation  | ++ -\- | Incrémentation et décrementation suffixe |
+| Appel           | () | Appel de fonction |
+| Déréférencement sommatif | [] | Déréférencement de la somme d'un pointeur et d'une expression spécifiée |
+| Sélection membre | . | Sélection membre par pointeur ou référence |
+
+#### priorité: 2, associativité: Droite à gauche
+| Opération          | Symbole | Description                |
+| :----------------- | :------ | :------------------------- |
+| Incrémentation     | ++ -\- | Incrémentation et décrementation préfixe |
+| Négation numérique | - | Négation du signe de l'opérande |
+| Négations          | ! ~ | Négation logique et négation binaire |
+| Transtypage        | <type> | Changement du type de l'opérande |
+| Conversion         | primitif | Conversion avec ou sans pertes d'informations |
+| Déréférencement    | * | Déréférencement du pointeur opérande |
+| Référencement      | & | Obtiention d'un pointeur vers l'opérande |
+| Allocation         | new type | Allocation dynamique par l'appel du modèle de la méthode statique "constructor" du type-opérande |
+| Libération         | delete | Libération dynamique par l'appel du modèle de la méthode statique "destructor" du type de l'opérande |
+
+Substition aux symboles:
+- type : type, exemple !*char, ?Object, ptr...
+- primitif: type primitif, exemple ptr, int, float...
+
+#### associativité: Gauche à droite
+| Priorité | Opération          | Symbole | Description                |
+| :-- | :----------------- | :------ | :------------------------- |
+| 3 | Multiplication, Division, Modulo | * / % | Multiplication, division ou modulo numérique modulée à la valeur maximal du type des opérandes |
+| 4 | Addition, Soustraction | + - | Addition ou soustraction numérique modulée à la valeur maximal du type des opérandes |
+| 5 | Décalage | << >> | Décalage binaire à gauche ou à droite
+| 6 | Comparaison | < > <= >= | Opérateurs de comparaisons numériques
+| 7 | Comparaison | == != | Opérateurs de comparaisons numériques
+| 8 | ET binaire | & | ET binaire
+| 9 | OU exclusif binaire | ^ | OU exclusif binaire
+| 10 | OU binaire | \| | OU binaire
+| 11 | ET logique | && | ET logique
+| 12 | OU logique | \|\| | ET logique
+| 13 | OU selectif | : | OU selectif, retournant l'opérande gauche si elle est non nulle, sinon l'opérande droite. left + (left != 0)*right
+| 14 | Assignation | = | Assignation d'une variable opérande par une valeur opérande
+| 14 | Assignation | *= /= %= += -= | Ré-assignation par opérateurs numériques
+| 14 | Assignation | <<= >>= &= \|= ^= | Ré-assignation par opérateurs binaires
 ### Variable et cast
 Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
 ```
