@@ -92,8 +92,9 @@ operators.states['^@chain']['='] = nc_optoken('^=');
 
 operators.states['.@chain'] = Object.assign( operators.states['.@chain'], range('0', '9', "float_number"));
 
-const keyword_list = ["if", "else", "while", "until", "struct", "return",
-"unsigned", "int", "float", "short", "long", "double", "char"];
+const keyword_list = ["asm", "char", "class", "const", "double", "else", "enum", "float", "if", "impl", "int", "is", "let", "long", 
+"model", "new", "ptr", "quad", "ret", "short", "static", "template", "throw", "type", "uchar", "uint", "ulong", "union", "until", 
+"ushort", "volatile", "while"];
 
 const keywords = chains(keyword_list, identifier, element => "TOKEN_KEYWORD_"+element.toUpperCase());
 /*const operators = chains(operator_list, {}, element => "TOKEN_OPERATOR_"+element);*/
@@ -211,6 +212,8 @@ module.exports = {
 		default: "dq_string"
 	},
 
+	...keywords.states,
+
 	RECORD_NOTNEEDED: "marker",
 	
 	whitespace: {
@@ -243,8 +246,6 @@ module.exports = {
 		'\0': "FINAL_STATE",
 		default: "singleline_comment"
 	},
-	
-	...keywords.states,
 	
 	...operators.states,
 	

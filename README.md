@@ -28,52 +28,21 @@ Même chose pour l'interpréteur à l'exception que le langage d'implémentation
 
 ## Syntaxe actuellement proposée
 
-### Boucle et itération
-La boucle while, vérifiant itérativement une expression vraie:
-```
-while(i < str.length)
-{
-	print(str[i++]);
-}
-```
-La boucle until, vérifiant itérativement une expression fausse:
-```
-until(i >= str.length)
-{
-	print(str[i++]);
-}
-```
-#### Protocoles d'itération spécifiques
-La boucle for devient une fonction relevant de l'objet concerné.
-
-Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
-```
-list.for(callback);
-list.each(callback);
-```
-### Fonction
-Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et un bloc d'instruction.
-```
-main(int ac, **char av): int
-{
-	ret 0;
-}
-```
-Analoguement une procédure sans type de retour ni argument pourra être déclaré de la façon suivante
-```
-someprocedure
-{
-	print(&"Hello");
-}
-```
-Une fonction-template peut être défini à l'aide des pointillets. Par exemple print:
-```
-...print(int i)
-{
-	let str = itoa(i);
-	write(1, str, strlen(str));
-}
-```
+### Primitifs
+| Symbole      | Type numérique | Description                |
+| :-------------- | :------ | :------------------------- |
+| ptr | non-signé | Pointeur vers la stack ou la heap |
+| char | signé | Charactère habituellement de taille 1 octet, de -128 à 127 |
+| uchar | non-signé | Charactère non-signé habituellement de taille 1 octet, de 0 à 255 |
+| short | signé | Mot habituellement de taille 2 octets, de -32767 à 32767 |
+| ushort | non-signé | Mot non-signé habituellement de taille 2 octets, de 0 à 65535 |
+| int | signé | Entier habituellement de taille 4 octets, de -2147483648 à 2147483647 |
+| uint | non-signé | Entier non-signé habituellement de taille 2 à 4 octets, de 0 à 4294967295 |
+| long | signé | Long habituellement de taille 8 octets, de -9 223 372 036 854 775 808 à -9 223 372 036 854 775 807 |
+| ulong | non-signé | Long non-signé habituellement de taille 8 octets, de 0 à +18 446 744 073 709 551 615 |
+| float | signé | Nombre flotant, habituellement de taille 4 octets |
+| double | signé | Nombre flotant, habituellement de taille 8 octets |
+| longdouble | signé | Nombre flotant, habituellement de taille 8-12 octets |
 
 ### Opérateurs
 #### priorité: 1, associativité: Gauche à droite
@@ -118,6 +87,61 @@ Substition aux symboles:
 | 14 | Assignation | = | Assignation d'une variable opérande par une valeur opérande
 | 14 | Assignation | *= /= %= += -= | Ré-assignation par opérateurs numériques
 | 14 | Assignation | <<= >>= &= \|= ^= | Ré-assignation par opérateurs binaires
+
+### Mot clés et identifiants réservés
+Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
+
+`asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `if`, `impl`, `int`, `is`, `let`,
+
+`long`, `model`, `new`, `ptr`, `quad`, `ret`, `short`, `static`, `template`, `throw`, `type`, `uchar`, 
+
+`uint`, `ulong`, `union`, `until`, `ushort`, `volatile`, `while`
+### Boucle et itération
+La boucle while, vérifiant itérativement une expression vraie:
+```
+while(i < str.length)
+{
+	print(str[i++]);
+}
+```
+La boucle until, vérifiant itérativement une expression fausse:
+```
+until(i >= str.length)
+{
+	print(str[i++]);
+}
+```
+#### Protocoles d'itération spécifiques
+La boucle for devient une fonction relevant de l'objet concerné.
+
+Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
+```
+list.for(callback);
+list.each(callback);
+```
+### Fonction
+Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et un bloc d'instruction.
+```
+main(int ac, **char av): int
+{
+	ret 0;
+}
+```
+Analoguement une procédure sans type de retour ni argument pourra être déclaré de la façon suivante
+```
+someprocedure
+{
+	print(!"Hello");
+}
+```
+Une fonction-template peut être définie à l'aide des pointillets. Par exemple print:
+```
+...print(int i)
+{
+	let str = itoa(i);
+	write(1, str, strlen(str));
+}
+```
 ### Variable et cast
 Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
 ```
@@ -148,7 +172,7 @@ let i = 42;		// int
 let i2= 0b0001_1010;	// int
 let f = 42.2;		// float
 let c = "H";		// char
-let s = &"Hello";	// !*[5]char
+let s = !"Hello";	// !*[5]char
 let o = new Car;	// Car (class)
 let d = <Driveable> o;	// Driveable (class@model)
 ```
@@ -199,13 +223,13 @@ Il est possible d'utiliser les flags suivants:
 - Immutable noté `!`
 ```
 ?!Object pointer = malloc(Object.size);
-!*char string = &"Immutable string";
+!*char string = !"Immutable string";
 ```
 > L'ordre d'apparition des flags est injonctif.
 > Les flags ne s'applique qu'aux pointeurs.
 #### Séquentialité du pointage
 ````
-const !*[3]char a = &"abc";
+const !*[3]char a = !"abc";
 ````
 `a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence.
 #### Séquentialité dynamique
@@ -309,7 +333,7 @@ class Name {
 ```
 Utilisation:
 ```
-uint num = Name<uint>.new().get();
+uint num = (new Name<uint>).get();
 ```
 #### Modèle
 Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `impl` pour implémenter un modèle.
