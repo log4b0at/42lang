@@ -1,8 +1,8 @@
 
 //#include "./main.42"
 
-main(int ac, char **av): int
+main(/*hey*/int ac, char/*here also*/**av): int//a comment
 {
-	print(&"Hello World!");
+	print(/**/&"Hello World!");
 	return (0);
 }

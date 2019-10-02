@@ -9,7 +9,9 @@ extern int	state_table[];
 extern char	*tokens_labels[];
 
 char	g_buffer[BUFFER_SIZE];
+char	g_record_buffer[4096];
 int		g_record_started = 0;
+int		g_record_counter = 0;
 
 int		main(int ac, char **av)
 {
@@ -48,19 +50,27 @@ void	ft_output_text()
 					ft_unexpected_char(g_buffer[k++]);
 				else
 				{
+					ft_send_text_token(state - FINAL_STATE);
 					if (g_record_started)
 					{
-						ft_record(save_k, k);
-						g_record_started = 0;
-						write(1, "\"\n", 2);
-					} 
+						if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
+						{
+							write(1,"RECORD: \"", 9);
+							ft_record(save_k, k);
+							ft_end_record();
+							write(1, "\"\n", 2);
+						}
+						else
+							g_record_started = 0;
+					}
 					else if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
 					{
+						ft_start_record();
 						write(1,"RECORD: \"", 9);
 						ft_record(save_k, k);
+						ft_end_record();
 						write(1, "\"\n", 2);
 					}
-					ft_send_text_token(state - FINAL_STATE);
 					if (state >= FORWARDLOOK_NEEDED)
 						k++;
 					save_k = k;
@@ -74,10 +84,7 @@ void	ft_output_text()
 		if (state >= RECORD_NEEDED && state < RECORD_NOTNEEDED)
 		{
 			if (!g_record_started)
-			{
-				write(1,"RECORD: \"", 9);
-				g_record_started = 1;
-			}
+				ft_start_record();
 			ft_record(save_k, len);
 			save_k = 0;
 		}
@@ -91,9 +98,11 @@ void	ft_output_binary()
 	int	state;
 	int	save_k;
 
+	len = BUFFER_SIZE;
 	state = INIT_STATE;
-	while ((len = read(0, g_buffer, BUFFER_SIZE)) > 0)
+	while (len > 0)
 	{
+		len = read(0, g_buffer, BUFFER_SIZE);
 		k = 0;
 		save_k = 0;
 		while (k < len)
@@ -105,18 +114,23 @@ void	ft_output_binary()
 					ft_unexpected_char(g_buffer[k++]);
 				else
 				{
+					ft_send_token(state - FINAL_STATE);
 					if (g_record_started)
 					{
-						ft_record(save_k, k);
-						ft_end_record();
-					} 
+						if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
+						{
+							ft_record(save_k, k);
+							ft_end_record();
+						}
+						else
+							g_record_started = 0;
+					}
 					else if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
 					{
 						ft_start_record();
 						ft_record(save_k, k);
 						ft_end_record();
 					}
-					ft_send_token(state - FINAL_STATE);
 					if (state >= FORWARDLOOK_NEEDED)
 						k++;
 					save_k = k;
@@ -127,13 +141,13 @@ void	ft_output_binary()
 			}
 			k++;
 		}
-	}
-	if (state >= RECORD_NEEDED && state < RECORD_NOTNEEDED)
-	{
-		if (!g_record_started)
-			ft_start_record();
-		ft_record(save_k, len);
-		save_k = 0;
+		if (state >= RECORD_NEEDED && state < RECORD_NOTNEEDED)
+		{
+			if (!g_record_started)
+				ft_start_record();
+			ft_record(save_k, len);
+			save_k = 0;
+		}
 	}
 }
 
@@ -163,18 +177,25 @@ void	ft_unexpected_char(char c)
 
 void	ft_start_record()
 {
-	const char c = RECORD_STATE - FINAL_STATE;
 	g_record_started = 1;
-	write(1, &c, 1);
+	g_record_counter = 0;
 }
 
 void	ft_end_record()
 {
-	write(1, ".", 1);
+	write(1, g_record_buffer, g_record_counter);
 	g_record_started = 0;
 }
 
-void	ft_record(int start, int end)
+void	ft_record(const int start, const int end)
 {
-	write(1, g_buffer + start, end - start);
+	int i = 0;
+	const int record_counter = g_record_counter;
+
+	while (i < end-start)
+	{
+		g_record_buffer[record_counter+i] = g_buffer[start+i];
+		i++;
+	}
+	g_record_counter += i;
 }

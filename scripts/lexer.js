@@ -104,12 +104,12 @@ const INIT_STATE = {
 	...keywords.chain,
 	...operators.chain,
 	...non_contraignant_operators_chain,
-	' ': "whitespace",
-	'\t': "whitespace",
-	'\n': "whitespace",
-	'\r': "whitespace",
-	'\f': "whitespace",
-	'\v': "whitespace",
+	' ': "INIT_STATE",
+	'\t': "INIT_STATE",
+	'\n': "INIT_STATE",
+	'\r': "INIT_STATE",
+	'\f': "INIT_STATE",
+	'\v': "INIT_STATE",
 	'"': "dq_string",
 	'\'': "sq_string",
 	'0': "prefixed_number",
@@ -216,16 +216,34 @@ module.exports = {
 
 	RECORD_NOTNEEDED: "marker",
 	
-	whitespace: {
+	/*whitespace: {
 		' ': "whitespace",
 		'\t': "whitespace",
 		'\n': "whitespace",
 		'\r': "whitespace",
 		'\f': "whitespace",
 		default: "TOKEN_WHITESPACE"
+	},*/
+
+	multiline_comment: {
+		'*': "end_multiline_comment",
+		'\0': "FINAL_STATE",
+		default: "multiline_comment"
 	},
 	
-	multiline_comment: {
+	end_multiline_comment: {
+		'/': "INIT_STATE",
+		'\0': "FINAL_STATE",
+		default: "multiline_comment"
+	},
+	
+	singleline_comment: {
+		'\n': "INIT_STATE", // TOKEN_SINGLELINE_COMMENT
+		'\0': "FINAL_STATE",
+		default: "singleline_comment"
+	},
+	
+	/*multiline_comment: {
 		'*': "end0_multiline_comment",
 		'\0': "FINAL_STATE",
 		default: "multiline_comment"
@@ -238,14 +256,14 @@ module.exports = {
 	},
 	
 	end1_multiline_comment: {
-		default: "TOKEN_MULTILINE_COMMENT"
+		default: "INIT_STATE" // TOKEN_MULTILINE_COMMENT
 	},
 	
 	singleline_comment: {
-		'\n': "TOKEN_SINGLELINE_COMMENT",
+		'\n': "INIT_STATE", // TOKEN_SINGLELINE_COMMENT
 		'\0': "FINAL_STATE",
 		default: "singleline_comment"
-	},
+	},*/
 	
 	...operators.states,
 	
@@ -266,16 +284,14 @@ module.exports = {
 
 	...keywords.generated_states,
 	...operators.generated_states,
-	TOKEN_WHITESPACE: "token",
 
+	//TOKEN_WHITESPACE: "token",
 	FORWARDLOOK_NEEDED: "marker",
-
 	TOKEN_STRING: "token",
 	...nc_optokens,
 
 	RECORD_STATE: "token",
 
-	IGNORE_STATE: "token",
-	TOKEN_MULTILINE_COMMENT: "token",
-	TOKEN_SINGLELINE_COMMENT: "token",
+	//TOKEN_MULTILINE_COMMENT: "token",
+	//TOKEN_SINGLELINE_COMMENT: "token",
 };
