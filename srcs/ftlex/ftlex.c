@@ -53,8 +53,15 @@ void	ft_output_text()
 					ft_send_text_token(state - FINAL_STATE);
 					if (state < RECORD_NOTNEEDED_TOKENS || state == TOKEN_STRING)
 					{
+						if(!g_record_started)
+							ft_start_record();
+						ft_record(save_k, k);
+						write(1,"RECORD: \"", 9);
 						switch(state)
 						{
+							case TOKEN_IDENTIFIER:
+								write(1, g_record_buffer, g_record_counter);
+								break;
 							case TOKEN_NUMBER:
 								write_dec_number();
 							break;
@@ -70,11 +77,10 @@ void	ft_output_text()
 							case TOKEN_BIN_NUMBER:
 								write_bin_number();
 							break;
+							case TOKEN_OCT_NUMBER:
+								write_oct_number();
+							break;
 						}
-						if(!g_record_started)
-							ft_start_record();
-						write(1,"RECORD: \"", 9);
-						ft_record(save_k, k);
 						ft_end_record();
 						write(1, "\"\n", 2);
 					}
@@ -124,22 +130,39 @@ void	ft_output_binary()
 				else
 				{
 					ft_send_token(state - FINAL_STATE);
-					if (g_record_started)
+					if (state < RECORD_NOTNEEDED_TOKENS || state == TOKEN_STRING)
 					{
-						if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
-						{
-							ft_record(save_k, k);
-							ft_end_record();
-						}
-						else
-							g_record_started = 0;
-					}
-					else if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
-					{
-						ft_start_record();
+						if(!g_record_started)
+							ft_start_record();
 						ft_record(save_k, k);
+						switch(state)
+						{
+							case TOKEN_IDENTIFIER:
+								write(1, g_record_buffer, g_record_counter);
+								break;
+							case TOKEN_NUMBER:
+								write_dec_number();
+							break;
+							case TOKEN_STRING:
+								write_string();
+							break;
+							case TOKEN_FLOAT_NUMBER:
+								write_float_number();
+							break;
+							case TOKEN_HEX_NUMBER:
+								write_hex_number();
+							break;
+							case TOKEN_BIN_NUMBER:
+								write_bin_number();
+							break;
+							case TOKEN_OCT_NUMBER:
+								write_oct_number();
+							break;
+						}
 						ft_end_record();
 					}
+					else if(g_record_started)
+						ft_end_record();
 					if (state >= FORWARDLOOK_NEEDED)
 						k++;
 					save_k = k;

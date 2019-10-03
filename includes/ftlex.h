@@ -15,5 +15,11 @@ void	ft_output_binary();
 void	ft_start_record();
 void	ft_end_record();
 void	ft_record(int start, int end);
+void	write_oct_number();
+void	write_hex_number();
+void	write_dec_number();
+void	write_bin_number();
+void	write_float_number();
+void	write_string();
 
 #endif
