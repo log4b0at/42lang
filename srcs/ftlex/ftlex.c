@@ -51,26 +51,35 @@ void	ft_output_text()
 				else
 				{
 					ft_send_text_token(state - FINAL_STATE);
-					if (g_record_started)
+					if (state < RECORD_NOTNEEDED_TOKENS || state == TOKEN_STRING)
 					{
-						if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
+						switch(state)
 						{
-							write(1,"RECORD: \"", 9);
-							ft_record(save_k, k);
-							ft_end_record();
-							write(1, "\"\n", 2);
+							case TOKEN_NUMBER:
+								write_dec_number();
+							break;
+							case TOKEN_STRING:
+								write_string();
+							break;
+							case TOKEN_FLOAT_NUMBER:
+								write_float_number();
+							break;
+							case TOKEN_HEX_NUMBER:
+								write_hex_number();
+							break;
+							case TOKEN_BIN_NUMBER:
+								write_bin_number();
+							break;
 						}
-						else
-							g_record_started = 0;
-					}
-					else if ((state >= RECORD_NEEDED_TOKENS && state < RECORD_NOTNEEDED_TOKENS) || state == TOKEN_STRING)
-					{
-						ft_start_record();
+						if(!g_record_started)
+							ft_start_record();
 						write(1,"RECORD: \"", 9);
 						ft_record(save_k, k);
 						ft_end_record();
 						write(1, "\"\n", 2);
 					}
+					else if(g_record_started)
+						ft_end_record();
 					if (state >= FORWARDLOOK_NEEDED)
 						k++;
 					save_k = k;
@@ -183,7 +192,6 @@ void	ft_start_record()
 
 void	ft_end_record()
 {
-	write(1, g_record_buffer, g_record_counter);
 	g_record_started = 0;
 }
 
@@ -198,4 +206,75 @@ void	ft_record(const int start, const int end)
 		i++;
 	}
 	g_record_counter += i;
+}
+
+void	write_bin_number()
+{
+	int total = 0;
+    int i = 0;
+	while (i < g_record_started)
+    {
+		const char c = g_record_buffer[i];
+        if(c != '_')
+        {
+            total *= 2;
+            if (c == '1') total++;
+        }
+        i++;
+    }
+	write(1, &total, 4);
+}
+
+void	write_hex_number()
+{
+	int total = 0;
+    int i = 0;
+	while (i < g_record_counter)
+    {
+		const char c = g_record_buffer[i];
+        if(c!='_')
+            total = total*16 + 9*(c>>6)+(c&017);
+        i++;
+    }
+	write(1, &total, 4);
+}
+
+void	write_oct_number()
+{
+	int total = 0;
+    int i = 0;
+	while (i < g_record_counter)
+    {
+		const char c = g_record_buffer[i];
+        if(c!='_')
+            total = total*8 + c - '0';
+        i++;
+    }
+	write(1, &total, 4);
+}
+
+void	write_dec_number()
+{
+	int total = 0;
+    int i = 0;
+	while (i < g_record_counter)
+    {
+		const char c = g_record_buffer[i];
+        if(c!='_')
+            total = total*10 + c - '0';
+        i++;
+    }
+	write(1, &total, 4);
+}
+
+void	write_string()
+{
+	g_record_buffer[g_record_counter] = 0;
+	write(1, g_record_buffer + 1, g_record_counter);
+}
+
+void	write_float_number()
+{
+	g_record_buffer[g_record_counter] = 0;
+	write(1, g_record_buffer + 1, g_record_counter);
 }
