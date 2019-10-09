@@ -31,18 +31,18 @@ Même chose pour l'interpréteur à l'exception que le langage d'implémentation
 ### Primitifs
 | Symbole      | Type numérique | Description                |
 | :-------------- | :------ | :------------------------- |
-| ptr | non-signé | Pointeur vers la stack ou la heap |
+| ptr | non-signé | Adresse mémoire |
 | char | signé | Charactère habituellement de taille 1 octet, de -128 à 127 |
-| uchar | non-signé | Charactère non-signé habituellement de taille 1 octet, de 0 à 255 |
-| short | signé | Mot habituellement de taille 2 octets, de -32767 à 32767 |
-| ushort | non-signé | Mot non-signé habituellement de taille 2 octets, de 0 à 65535 |
+| uchar | non-signé | Charactère non-signé habituellement de taille 1 octet, de 0 à 255 |
+| word | signé | Mot habituellement de taille 2 octets, de -32767 à 32767 |
+| uword | non-signé | Mot non-signé habituellement de taille 2 octets, de 0 à 65535 |
 | int | signé | Entier habituellement de taille 4 octets, de -2147483648 à 2147483647 |
 | uint | non-signé | Entier non-signé habituellement de taille 2 à 4 octets, de 0 à 4294967295 |
-| long | signé | Long habituellement de taille 8 octets, de -9 223 372 036 854 775 808 à -9 223 372 036 854 775 807 |
-| ulong | non-signé | Long non-signé habituellement de taille 8 octets, de 0 à +18 446 744 073 709 551 615 |
+| long | signé | Long habituellement de taille 8 octets, de -9_223_372_036_854_775_808 à -9_223_372_036_854_775_807 |
+| ulong | non-signé | Long non-signé habituellement de taille 8 octets, de 0 à +18_446_744_073_709_551_615 |
 | float | signé | Nombre flotant, habituellement de taille 4 octets |
 | double | signé | Nombre flotant, habituellement de taille 8 octets |
-| longdouble | signé | Nombre flotant, habituellement de taille 8-12 octets |
+| quad | signé | Nombre flotant, taille >= double |
 
 ### Opérateurs
 #### priorité: 1, associativité: Gauche à droite
@@ -51,7 +51,7 @@ Même chose pour l'interpréteur à l'exception que le langage d'implémentation
 | Incrémentation  | ++ -\- | Incrémentation et décrementation suffixe |
 | Appel           | () | Appel de fonction |
 | Déréférencement sommatif | [] | Déréférencement de la somme d'un pointeur et d'une expression spécifiée |
-| Sélection membre | . | Sélection membre par pointeur ou référence |
+| Sélection membre | . | Selection membre avec déréférencement |
 
 #### priorité: 2, associativité: Droite à gauche
 | Opération          | Symbole | Description                |
@@ -93,9 +93,9 @@ Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent 
 
 `asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `if`, `impl`, `int`, `is`, `let`,
 
-`long`, `model`, `new`, `ptr`, `quad`, `ret`, `short`, `static`, `template`, `throw`, `type`, `uchar`, 
+`long`, `model`, `new`, `ptr`, `quad`, `ret`, `static`, `template`, `throw`, `type`, `uchar`, 
 
-`uint`, `ulong`, `union`, `until`, `ushort`, `volatile`, `while`
+`uint`, `ulong`, `union`, `until`, `uword`, `volatile`, `while`, `word`
 ### Boucle et itération
 La boucle while, vérifiant itérativement une expression vraie:
 ```
@@ -368,7 +368,7 @@ let num = do_nothing(42);
 #### Modèle
 Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `impl` pour implémenter un modèle.
 
-Voici un exemple de modèle de classe qui jouera le role d'interface.
+Voici un exemple de modèle de classe qui jouera le role d'interface, et un autre modèle qui sera classe parente.
 ```
 model class Interface {
 	model method(int input): int;
@@ -392,8 +392,8 @@ class Class {
 ### Syntaxe générale
 ```
 @sometag("Some token")
-template<Type, Expression>
 model
+template<Type, Expression>
 impl Driveable
 type ptr
 class Car { }
