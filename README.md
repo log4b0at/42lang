@@ -172,20 +172,19 @@ let i = 42;		// int
 let i2= 0b0001_1010;	// int
 let f = 42.2;		// float
 let c = "H";		// char
-let s = !"Hello";	// !*[5]char
+let s = "Hello";	// !*[5]char
 let o = new Car;	// Car (class)
 let d = <Driveable> o;	// Driveable (class@model)
 ```
-Le typage automatique est également effectif lors d'une déclaration de variable ou dans les arguments d'un appel à fonction.
-(Enumérations uniquement)
+Le typage automatique des énumérations est également effectif lors d'une déclaration de variable ou dans les arguments d'un appel à fonction.
 ```
-enum ABC { A B C };
-f(ABC a) { };
+enum Letter { A B C };
+
+f(Letter a) { };
 
 main {
-	ABC a = A;
+	Letter a = A;
 	f(B);
-	// 'A' and 'B' aren't global symbols
 }
 ```
 ### Marquage des variables
@@ -217,26 +216,21 @@ On peut l'écrire directement avec un astérix avant le type cible.
 Pointer<Object> pointer = malloc(ptr.size);
 *Object pointer = malloc(ptr.size);
 ```
-Des fois il est utile ou nécessaire d'avoir plus d'information concernant le type ciblé par un pointeur.
-Il est possible d'utiliser les flags suivants:
+Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
 - Immutable noté `!`
+- Local noté `&`
 ```
 ?!Object pointer = malloc(Object.size);
-!*char string = !"Immutable string";
+!*char string = "Immutable string";
 ```
 > L'ordre d'apparition des flags est injonctif.
 > Les flags ne s'applique qu'aux pointeurs.
 #### Séquentialité du pointage
 ````
-const !*[3]char a = !"abc";
+const !*[3]char a = "abc";
 ````
-`a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence.
-#### Séquentialité dynamique
-```
-const *[length]char str = "Hello";
-```
-Si la longueur de la séquence est dynamique, renseignez une expression dans les crochets.
+`a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence contiguë.
 ### Condition & Branching
 L'instruction `if` peut être utilisé comme expression.
 Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
@@ -263,25 +257,48 @@ if (cond1)
 else
 	{ action2(); }
 ```
-Vous stipulez au compilateur que le second `if` n'aura pas de `else`.
-Il en conclu que le `else` appartient au `if` parent.
-
-La méthode est analogue avec des `if` d'une et unique instruction.
+Vous stipulez que le second `if` n'aura pas de `else`.
+Il est conclu que le `else` appartient au `if` parent.
 ### Fonction lambda
-Créer une fonction lamdba en suivant cette syntaxe, sans preciser les types des arguments.
+Exemple sans paramètres:
 ```
-list.sort((a, b) => if (a < b) ret a else ret b);
+element.on(CHANGE, => alert("it change") );
 ```
-Les types des arguments sont déterminés par le type du premier argument de la fonction sort.
-
+Exemple trier une liste:
+```
+list.sort((a, b) => if (a < b) ret -1 else ret 1);
+```
 Voici comment déclarer une fonction prenant en paramètre une fonction lambda.
 ```
 model LambdaCallback(int input): int;
 
-call(LambdaCallback callback, int input): int
+function(LambdaCallback callback): int
 {
-	ret callback(input);
+	ret callback(42);
 }
+```
+### Tableaux
+Allouer de la mémoire sur la stack de manière fonctionnelle avec wrap et copy:
+```
+let array = wrap(42);
+copy(array, "Hello world!");
+```
+Par défaut le type retourné par wrap est de la forme `&*[42]char`
+Allouer de la mémoire sur la heap avec alloc:
+```
+let array = alloc(42);
+copy(array, "Hello world!");
+```
+Par défaut le type retourné par alloc est de la forme `*[42]char`
+> note: copy déduit la taille à copier à partir du type de la source, ici `!*[12]char`. Si la taille de la source est inconnue il convient d'utiliser strcpy ou strncpy
+### Instantiation d'objet
+Pour instancier un objet sur la stack, on utilisera l'opérateur esperluette `&`, comme pour obtenir l'addresse d'une variable.
+```
+&HeapObserver observer = &HeapObserver();
+```
+Pour instancier l'objet sur la heap on utilisera l'opérateur new.
+```
+HeapObserver observer = new HeapObserver();
 ```
 ### Déclarations
 #### Classe
@@ -322,18 +339,31 @@ type ptr union Cars { Mercedes Dacia Renault Ford }
 Le type de chaque membre doit correspondre au type de l'union.
 Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
 #### Template
-Les templates permettent de récuperer des tokens.
+Les templates permettent de récuperer des types ou des expressions.
+Exemple sur une classe:
 ```
-template<Type>
-class Name {
-	get: Type {
-		ret 42;
-	}
+template<TYPE>
+class Number {
+	TYPE value;
+	constructor(TYPE value) { this.value = value; }
 }
 ```
 Utilisation:
 ```
-uint num = (new Name<uint>).get();
+let number = &Number<uint>(42);
+uint num = number.value;
+```
+Autre exemple sur une fonction, cette fois si la template récupère les expressions passées en paramêtre de la fonction de manière statique.
+```
+template<EXPR>
+do_nothing(EXPR.type parameter): EXPR.type 
+{ 
+	ret parameter; 
+}
+```
+Utilisation:
+```
+let num = do_nothing(42);
 ```
 #### Modèle
 Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `impl` pour implémenter un modèle.
@@ -341,15 +371,18 @@ Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `imp
 Voici un exemple de modèle de classe qui jouera le role d'interface.
 ```
 model class Interface {
-	int properties;
-	method(int input): int;
+	model method(int input): int;
 }
 
-class ParentClass {
-	int properties = 42 * 2
+model class Parent {
+	constructor
+	{}
+
+	destructor
+	{}
 }
 
-impl ParentClass, Interface
+impl Parent, Interface
 class Class {
 	int properties = 42
 	method(int a): int { ret 42; }
@@ -359,7 +392,7 @@ class Class {
 ### Syntaxe générale
 ```
 @sometag("Some token")
-template<Tokens, Tokens2>
+template<Type, Expression>
 model
 impl Driveable
 type ptr
