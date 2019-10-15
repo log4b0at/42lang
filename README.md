@@ -87,7 +87,7 @@ Substition aux symboles:
 | 14 | Assignation | = | Assignation d'une variable opérande par une valeur opérande
 | 14 | Assignation | *= /= %= += -= | Ré-assignation par opérateurs numériques
 | 14 | Assignation | <<= >>= &= \|= ^= | Ré-assignation par opérateurs binaires
-
+| 15 | Lambda | => | Déclaration de fonction lambda
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
@@ -131,7 +131,7 @@ Analoguement une procédure sans type de retour ni argument pourra être déclar
 ```
 someprocedure
 {
-	print(!"Hello");
+	print("Hello");
 }
 ```
 Une fonction-template peut être définie à l'aide des pointillets. Par exemple print:
@@ -171,7 +171,7 @@ Le typage automatique se fait en utilisant le mot clé `let` à la place du type
 let i = 42;		// int
 let i2= 0b0001_1010;	// int
 let f = 42.2;		// float
-let c = "H";		// char
+let c = 'H';		// char
 let s = "Hello";	// !*[5]char
 let o = new Car;	// Car (class)
 let d = <Driveable> o;	// Driveable (class@model)
@@ -190,31 +190,31 @@ main {
 ### Marquage des variables
 #### Constance
 ```
-const char a = "A";
+const char a = 'A';
 ```
 Marqué du mot clé `const` la ré-assignation de la variable est prohibée.
 #### Volatilité
 ````
-volatile char a = "A";
+volatile char a = 'A';
 ````
 Marqué du mot clé `volatile`, aucune optimisation ne sera faite.
 #### Staticité
 ````
-static char a = "A";
+static char a = 'A';
 ````
 Marqué du mot clé `static`, la variable sera traité comme globale.
 ### Les pointeurs et les flags
 Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
 La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
-Exemple avec la fonction malloc.
+Exemple avec la fonction alloc.
 ```
-ptr pointer = malloc(8);
+ptr pointer = alloc(8);
 ```
 La notation avec le type 'Pointer' permet de stocker des informations concernant la cible du pointeur.
 On peut l'écrire directement avec un astérix avant le type cible.
 ```
-Pointer<Object> pointer = malloc(ptr.size);
-*Object pointer = malloc(ptr.size);
+Pointer<Object> pointer = alloc(ptr.size);
+*Object pointer = alloc(ptr.size);
 ```
 Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
@@ -272,10 +272,22 @@ Voici comment déclarer une fonction prenant en paramètre une fonction lambda.
 ```
 model LambdaCallback(int input): int;
 
-function(LambdaCallback callback): int
+function(LambdaCallback callback): int result
 {
 	ret callback(42);
 }
+```
+### Overload et labels
+Overload une fonction avec la même signature, c'est possible.
+```
+getBy(int column): Object {}
+getBy(int row): Object {}
+```
+Utilisez le nom de l'argument comme label dans l'appel pour cibler la fonction souhaitée.
+```
+let object = getBy(45); // implicitly by column
+let object = getBy(column: 45);
+let object = getBy(row: 2);
 ```
 ### Tableaux
 Allouer de la mémoire sur la stack de manière fonctionnelle avec wrap et copy:
@@ -290,7 +302,7 @@ let array = alloc(42);
 copy(array, "Hello world!");
 ```
 Par défaut le type retourné par alloc est de la forme `*[42]char`
-> note: copy déduit la taille à copier à partir du type de la source, ici `!*[12]char`. Si la taille de la source est inconnue il convient d'utiliser strcpy ou strncpy
+> Notez que copy déduit la taille à copier à partir du type de la source, ici `!*[12]char`. Si la taille de la source est inconnue il convient d'utiliser strcpy ou strncpy
 ### Instantiation d'objet
 Pour instancier un objet sur la stack, on utilisera l'opérateur esperluette `&`, comme pour obtenir l'addresse d'une variable.
 ```
