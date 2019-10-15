@@ -1,5 +1,5 @@
 # 42lang
-Voici mon projet de création d'un langage de programmation haut niveau type C++.
+Voici mon projet de création d'un langage de programmation haut niveau.
 Le langage se veut plus intuitif et plus simple à prendre en main que C++.
 Les contributeurs motivés sont les bienvenus.
 
@@ -10,23 +10,17 @@ de sémantique et d'approche algorithmique;
 - Destituer le code implicite ou ambiguë et error-prone.
 - Ré-utiliser, substituer ou unifier des conceptes importés d'autres langages.
 - Limiter le par-coeur aux concepts fondamentaux du langage.
-- Innover sans s'agenouiller devant les doctrines prépondérantes de la programmation actuelle.
-
 ## Consignes
 ### Langage
 - Fortement typé
 - Orienté objets
 - Ignore les whitespaces & Respecte la casse
 ### Compilateur
-Voici les caractéristiques imposées par moi-même concernant le compilateur;
+Voici les caractéristiques imposées par moi-même concernant le compilateur:
 - Compilation multi-passes
-- Compilation streamée (entrée streamé, lexing streamé, error-reporting streamé, sortie compilée streamée)
 - Performance dans le temps de compilation
-- Liberté sur le choix du langage d'implémentation (Langages compilés uniquement)
-### Interpréteur
-Même chose pour l'interpréteur à l'exception que le langage d'implémentation pourrait être interprété.
 
-## Syntaxe actuellement proposée
+## Spécifications proposée
 
 ### Primitifs
 | Symbole      | Type numérique | Description                |
@@ -93,9 +87,9 @@ Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent 
 
 `asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `if`, `impl`, `int`, `is`, `let`,
 
-`long`, `model`, `new`, `ptr`, `quad`, `ret`, `static`, `template`, `throw`, `type`, `uchar`, 
+`long`, `model`, `new`, `ptr`, `quad`, `ret`, `static`, `throw`, `type`, `uchar`, 
 
-`uint`, `ulong`, `union`, `until`, `uword`, `volatile`, `while`, `word`
+`uint`, `ulong`, `union`, `until`, `use` `uword`, `volatile`, `while`, `word`
 ### Boucle et itération
 La boucle while, vérifiant itérativement une expression vraie:
 ```
@@ -127,21 +121,14 @@ main(int ac, **char av): int
 	ret 0;
 }
 ```
-Analoguement une procédure sans type de retour ni argument pourra être déclaré de la façon suivante
+Analoguement une procédure sans type de retour ni argument pourra être déclaré de la façon suivante.
 ```
 someprocedure
 {
 	print("Hello");
 }
 ```
-Une fonction-template peut être définie à l'aide des pointillets. Par exemple print:
-```
-...print(int i)
-{
-	let str = itoa(i);
-	write(1, str, strlen(str));
-}
-```
+
 ### Variable et cast
 Une variable ne peut être déclaré qu'au début d'une fonction, autrement c'est un cast
 ```
@@ -192,17 +179,17 @@ main {
 ```
 const char a = 'A';
 ```
-Marqué du mot clé `const` la ré-assignation de la variable est prohibée.
+Marquée `const` la ré-assignation de la variable est prohibée.
 #### Volatilité
 ````
 volatile char a = 'A';
 ````
-Marqué du mot clé `volatile`, aucune optimisation ne sera faite.
+Marquée `volatile`, aucune optimisation ne sera faite.
 #### Staticité
 ````
 static char a = 'A';
 ````
-Marqué du mot clé `static`, la variable sera traité comme globale.
+Marquée `static`, la variable sera traité comme globale.
 ### Les pointeurs et les flags
 Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
 La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
@@ -220,8 +207,16 @@ Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
 - Immutable noté `!`
 - Local noté `&`
+Les flags empêche le cast implicite dans les cas suivants.
+`!*var`	--! `*var`
+`?*var`	--! `*var`
+`*var`	--! `&*var`
+Les cas suivants sont autorisés.
+`&*var`	--> `*var`
+`*var`	--> `!*var`
+`*var`	--> `?var`
 ```
-?!Object pointer = malloc(Object.size);
+?!Object pointer = alloc(Object.size);
 !*char string = "Immutable string";
 ```
 > L'ordre d'apparition des flags est injonctif.
@@ -237,7 +232,7 @@ Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
 ```
 main: int
 {
-	ret if(condition) ret 5 else ret 2;
+	ret if(condition) 5 else 2;
 }
 ```
 > Le `else` sera obligatoire si il s'agit d'une expression.
@@ -278,7 +273,7 @@ function(LambdaCallback callback): int result
 }
 ```
 ### Overload et labels
-Overload une fonction avec la même signature, c'est possible.
+Overload d'une fonction possédant les mêmes types d'arguments.
 ```
 getBy(int column): Object {}
 getBy(int row): Object {}
@@ -354,7 +349,7 @@ Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
 Les templates permettent de récuperer des types ou des expressions.
 Exemple sur une classe:
 ```
-template<TYPE>
+model<TYPE>
 class Number {
 	TYPE value;
 	constructor(TYPE value) { this.value = value; }
@@ -367,7 +362,7 @@ uint num = number.value;
 ```
 Autre exemple sur une fonction, cette fois si la template récupère les expressions passées en paramêtre de la fonction de manière statique.
 ```
-template<EXPR>
+model<EXPR>
 do_nothing(EXPR.type parameter): EXPR.type 
 { 
 	ret parameter; 
@@ -403,22 +398,19 @@ class Class {
 
 ### Syntaxe générale
 ```
-@sometag("Some token")
-model
-template<Type, Expression>
+@tag("string")
+model<Type, Expression>
 impl Driveable
 type ptr
 class Car { }
 ```
 
-- Les annotations servent a référencer des meta-informations concernant la déclaration
-- Le mot clé "export" rend accessible la déclaration depuis une importation externe
-- Le mot clé "model" signifit que la déclaration servira de modèle d'implémentation
-- L'outil "template" permet de paramétrer la déclaration
-- L'outil "impl" permet d'implémenter un ou plusieurs modèles
-- Le mot clé "type" détermine le type de la déclaration 
-- La déclaration en elle-même
+- Les tags servent a stocker des informations concernant la déclaration
+- "export" rend accessible la déclaration depuis une importation externe
+- "model" signifit que la déclaration servira de modèle d'implémentation
+- "impl" permet d'implémenter un ou plusieurs modèles
+- "type" détermine le type de la déclaration 
 
-> Tout les mots clés et outils sont optionnels.
+> Tout ces outils sont optionnels.
 
-> L'ordre d'apparition des mots clés et outils est injonctif.
+> L'ordre d'apparition est injonctif.
