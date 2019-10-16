@@ -209,7 +209,9 @@ Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
 - Immutable noté `!`
 - Local noté `&`
+
 Les flags empêche le cast implicite dans les certains cas.
+
 | de | à | implicitement |
 | :-- | :-- | :-- |
 | `!*var` | `*var`  | oui |
