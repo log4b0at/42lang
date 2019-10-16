@@ -85,11 +85,13 @@ Substition aux symboles:
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
-`asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `if`, `impl`, `int`, `is`, `let`,
+`asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `global`, `goto`, 
 
-`long`, `model`, `new`, `ptr`, `quad`, `ret`, `static`, `throw`, `type`, `uchar`, 
+`if`, `impl`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`, `throw`,
 
-`uint`, `ulong`, `union`, `until`, `use` `uword`, `volatile`, `while`, `word`
+`type`, `uchar`, `uint`, `ulong`, `union`, `until`, `unstable`, `use`, `uword`, `while`,
+
+`word`
 ### Boucle et itération
 La boucle while, vérifiant itérativement une expression vraie:
 ```
@@ -180,16 +182,16 @@ main {
 const char a = 'A';
 ```
 Marquée `const` la ré-assignation de la variable est prohibée.
-#### Volatilité
+#### Instabilitée
 ````
-volatile char a = 'A';
+unstable char a = 'A';
 ````
-Marquée `volatile`, aucune optimisation ne sera faite.
-#### Staticité
+Marquée `unstable`, aucune optimisation ne sera faite.
+#### Globalité (staticité)
 ````
-static char a = 'A';
+global char a = 'A';
 ````
-Marquée `static`, la variable sera traité comme globale.
+Marquée `global`, la variable sera traité comme globale.
 ### Les pointeurs et les flags
 Les pointeurs vers type peuvent être écrit de 2 manières différentes, en utilisant le type 'Pointer' ou le type primitif 'ptr'.
 La notation avec le type primitif 'ptr' convient lorsque l'on a pas d'information sur la cible du pointeur.
@@ -207,14 +209,15 @@ Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
 - Immutable noté `!`
 - Local noté `&`
-Les flags empêche le cast implicite dans les cas suivants.
-`!*var`	--! `*var`
-`?*var`	--! `*var`
-`*var`	--! `&*var`
-Les cas suivants sont autorisés.
-`&*var`	--> `*var`
-`*var`	--> `!*var`
-`*var`	--> `?var`
+Les flags empêche le cast implicite dans les certains cas.
+| :-- | :-- | :--
+| de | à | implicitement |
+| `!*var` | `*var`  | oui |
+| `?*var` | `*var`  | oui |
+| `*var`  | `&*var` | oui |
+| `&*var` | `*var`  | non |
+| `*var`  | `!*var` | non |
+| `*var`  | `?var`  | non |
 ```
 ?!Object pointer = alloc(Object.size);
 !*char string = "Immutable string";
@@ -233,6 +236,12 @@ Utilisez `ret` pour retourner une valeur, comme si il s'agissait d'une fonction.
 main: int
 {
 	ret if(condition) 5 else 2;
+}
+```
+```
+main: int
+{
+	ret if(condition) { ret 5; } else { ret 2; };
 }
 ```
 > Le `else` sera obligatoire si il s'agit d'une expression.
@@ -382,10 +391,10 @@ model class Interface {
 }
 
 model class Parent {
-	constructor
+	construct
 	{}
 
-	destructor
+	destruct
 	{}
 }
 
