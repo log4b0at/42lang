@@ -216,10 +216,11 @@ Les flags empêche le cast implicite dans les certains cas.
 | :-- | :-- | :-- |
 | `!*var` | `*var`  | oui |
 | `?*var` | `*var`  | oui |
-| `*var`  | `&*var` | oui |
-| `&*var` | `*var`  | non |
+| `&*var`  | `*var` | oui* |
+| `*var` | `&*var`  | non |
 | `*var`  | `!*var` | non |
 | `*var`  | `?var`  | non |
+> \* : Sauf valeur de retour de fonction
 ```
 ?!Object pointer = alloc(Object.size);
 !*char string = "Immutable string";
