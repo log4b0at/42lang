@@ -78,18 +78,19 @@ Substition aux symboles:
 | 11 | ET logique | && | ET logique
 | 12 | OU logique | \|\| | ET logique
 | 13 | OU selectif | : | OU selectif, retournant l'opérande gauche si elle est non nulle, sinon l'opérande droite. left + (left != 0)*right
-| 14 | Assignation | = | Assignation d'une variable opérande par une valeur opérande
+| 14 | Assignation | = := | Assignation et assignation si nulle
 | 14 | Assignation | *= /= %= += -= | Ré-assignation par opérateurs numériques
 | 14 | Assignation | <<= >>= &= \|= ^= | Ré-assignation par opérateurs binaires
 | 15 | Lambda | => | Déclaration de fonction lambda
+| 16 | Virgule | , | Listage d'expression
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
-`asm`, `char`, `class`, `const`, `double`, `else`, `enum`, `float`, `global`, `goto`, 
+`asm`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `float`, `global`,
 
-`if`, `impl`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`, `throw`,
+`goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`,
 
-`type`, `uchar`, `uint`, `ulong`, `union`, `until`, `unstable`, `use`, `uword`, `while`,
+`throw`, `type`, `uchar`, `uint`, `ulong`, `union`, `until`, `unstable`, `use`, `uword`, `while`,
 
 `word`
 ### Boucle et itération
@@ -221,6 +222,7 @@ Les flags empêche le cast implicite dans les certains cas.
 | `*var`  | `!*var` | non |
 | `*var`  | `?var`  | non |
 > \* : Sauf valeur de retour de fonction
+Exemple d'utilisation:
 ```
 ?!Object pointer = alloc(Object.size);
 !*char string = "Immutable string";
