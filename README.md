@@ -57,8 +57,8 @@ Voici les caractéristiques imposées par moi-même concernant le compilateur:
 | Conversion         | primitif | Conversion avec ou sans pertes d'informations |
 | Déréférencement    | * | Déréférencement du pointeur opérande |
 | Référencement      | & | Obtiention d'un pointeur vers l'opérande |
-| Allocation         | new type | Allocation dynamique par l'appel du modèle de la méthode statique "constructor" du type-opérande |
-| Libération         | delete | Libération dynamique par l'appel du modèle de la méthode statique "destructor" du type de l'opérande |
+| Allocation         | new type | Allocation dynamique et appel la méthode "construct" du type-opérande |
+| Libération         | delete | Libération dynamique et appel la méthode "destruct" du type de l'opérande |
 
 Substition aux symboles:
 - type : type, exemple !*char, ?Object, ptr...
@@ -366,7 +366,7 @@ Exemple sur une classe:
 model<TYPE>
 class Number {
 	TYPE value;
-	constructor(TYPE value) { this.value = value; }
+	construct(TYPE value) { this.value = value; }
 }
 ```
 Utilisation:
