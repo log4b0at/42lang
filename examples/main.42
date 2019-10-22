@@ -1,6 +1,6 @@
 
-main(int ac, char **av): int
+main(int ac, **char av): int
 {
-	print(&"Hello World!");
+	print("Hello World!");
 	return (0);
 }

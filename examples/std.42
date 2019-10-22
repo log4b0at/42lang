@@ -1,0 +1,16 @@
+/*
+ * ftlang standard library
+ * author: log4b0at
+ */
+
+template<SIZE>
+wrap(int size): &*[SIZE]int pointer;
+
+template<SIZE>
+alloc(int size): *[SIZE]int pointer;
+
+template<DEST, SRC>
+copy(ptr dest, ptr src): DEST.type copy;
+
+template<...ARGS> print;
+

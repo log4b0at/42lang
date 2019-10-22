@@ -1,0 +1,44 @@
+interface Object
+{
+	getDescription<self>: *char { ret self.getTag("description") : "No description"; }
+	
+	@inline
+	global make<CLASS, POINTER>: Interfaced<CLASS> interfaced
+	{
+		Interfaced interfaced;
+		interfaced.value = POINTER;
+		interfaced.vtable = CLASS.vtable;
+		ret <CLASS> interfaced;
+	}
+	
+	@inline
+	new<CLASS, ...PARAMS>: CLASS instance
+	{
+		const CLASS object = <CLASS> malloc(CLASS.bytesize);
+		object.construct(PARAMS);
+		ret object;
+	}
+}
+
+enum Mode type uchar
+{
+	FRAG SPEC UPDNZ FCDZ
+	
+	isRightSpecifier(Mode mode): bool { ret mode == UPDNZ; }
+}
+
+class Entity impl Object
+{
+}
+
+class Human ext Entity
+{
+	
+}
+
+
+struct Interfaced<DECL>
+{
+	ptr vtable;
+	DECL value;
+}

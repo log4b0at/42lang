@@ -86,7 +86,7 @@ Substition aux symboles:
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
-`asm`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `float`, `global`,
+`asm`, `bool`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `float`, `global`,
 
 `goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`,
 
@@ -208,8 +208,8 @@ Pointer<Object> pointer = alloc(ptr.size);
 ```
 Il est possible d'utiliser les flags suivants sur les types pointeur:
 - Nullable noté `?`
-- Immutable noté `!`
 - Local noté `&`
+- Immutable noté `!`
 
 Les flags empêche le cast implicite dans les certains cas.
 
@@ -217,8 +217,8 @@ Les flags empêche le cast implicite dans les certains cas.
 | :-- | :-- | :-- |
 | `!*var` | `*var`  | oui |
 | `?*var` | `*var`  | oui |
-| `&*var`  | `*var` | oui* |
-| `*var` | `&*var`  | non |
+| `&*var` | `*var`  | oui* |
+| `*var`  | `&*var` | non |
 | `*var`  | `!*var` | non |
 | `*var`  | `?var`  | non |
 > \* : Sauf valeur de retour de fonction

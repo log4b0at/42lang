@@ -2,30 +2,33 @@
 model
 class Object
 {
-	static model constructor: self
+	model toString: String
 	{
-		ret self malloc(self.size);
+		ret "Hey" + {50, 784, 111} + CLASS.name;
 	}
 }
 
-/*
-int String_cmp(char* p0, char* p1)
+procedure(int index): int
 {
-    register char r0, r1;
-
-    W0:
-    r1 = *p1;
-    if (!r1) goto W0E;
-    r0 = *p0;
-    r0 = r0 == r1;
-    r0 = r0 && r1;
-    if (!r0) goto W0E;
-    p0++;
-    p1++;
-    goto W0;
-    W0E:
-    r0 = *p0;
-    r0 -= r1;
-    return r0;
+    ret index * 6;
 }
-*/
+
+template<SIZE>
+wrap(int size): &*[SIZE]int;
+
+template<DEST, SRC>
+copy(ptr dest, ptr src): DEST.type;
+
+template<SIZE>
+alloc(int size): *[SIZE]int;
+
+template<...AGRS>
+script MultiArgsInOnce
+print;
+
+print(int arg) { let a = itoa(arg); write(1, a, len(a)); }
+
+
+&*[50]int array = wrap(50);
+
+array[0] = &HashSet<String>;
