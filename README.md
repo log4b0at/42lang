@@ -86,11 +86,11 @@ Substition aux symboles:
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
-`asm`, `bool`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `float`, `global`,
+`asm`, `bool`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `ext`, `float`, `global`,
 
-`goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`,
+`goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`, `struct`,
 
-`throw`, `type`, `uchar`, `uint`, `ulong`, `union`, `until`, `unstable`, `use`, `uword`, `while`,
+`throw`, `type`, `uchar`, `uint`, `ulong`, `until`, `unstable`, `use`, `uword`, `while`,
 
 `word`
 ### Boucle et itération
@@ -231,7 +231,7 @@ Exemple d'utilisation:
 > Les flags ne s'applique qu'aux pointeurs.
 #### Séquentialité du pointage
 ````
-const !*[3]char a = "abc";
+const ![3]*char a = "abc";
 ````
 `a` peut pointer sur un seul char ou une séquence de plusieurs char, ainsi nous renseignont la longueur de cette séquence contiguë.
 ### Condition & Branching
@@ -278,6 +278,7 @@ Exemple trier une liste:
 list.sort((a, b) => if (a < b) ret -1 else ret 1);
 ```
 Voici comment déclarer une fonction prenant en paramètre une fonction lambda.
+Déclarez d'abord une fonction modèle.
 ```
 model LambdaCallback(int input): int;
 
@@ -304,14 +305,14 @@ Allouer de la mémoire sur la stack de manière fonctionnelle avec wrap et copy:
 let array = wrap(42);
 copy(array, "Hello world!");
 ```
-Par défaut le type retourné par wrap est de la forme `&*[42]char`
+Par défaut le type retourné par wrap est de la forme `&[42]*char`
 Allouer de la mémoire sur la heap avec alloc:
 ```
 let array = alloc(42);
 copy(array, "Hello world!");
 ```
-Par défaut le type retourné par alloc est de la forme `*[42]char`
-> Notez que copy déduit la taille à copier à partir du type de la source, ici `!*[12]char`. Si la taille de la source est inconnue il convient d'utiliser strcpy ou strncpy
+Par défaut le type retourné par alloc est de la forme `[42]*char`
+> Notez que copy déduit la taille à copier à partir du type de la source, ici `![42]*char`. Si la taille de la source est inconnue il convient d'utiliser strcpy ou strncpy
 ### Instantiation d'objet
 Pour instancier un objet sur la stack, on utilisera l'opérateur esperluette `&`, comme pour obtenir l'addresse d'une variable.
 ```
@@ -338,8 +339,7 @@ Une classe est obligatoirement un type de pointeur, tout comme les fonctions, in
 Pour étendre la classe il faudra implémenter un modèle. Voir l'utilisation des modèles.
 #### Enumération
 ```
-type uint
-enum Alphabet
+enum Alphabet type uint
 {
 	A B C D E F G H I J K L M N O P Q R S T U V W X Y
 	Z = 25
@@ -363,8 +363,7 @@ Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
 Les templates permettent de récuperer des types ou des expressions.
 Exemple sur une classe:
 ```
-model<TYPE>
-class Number {
+class Number<TYPE> {
 	TYPE value;
 	construct(TYPE value) { this.value = value; }
 }
@@ -376,10 +375,9 @@ uint num = number.value;
 ```
 Autre exemple sur une fonction, cette fois si la template récupère les expressions passées en paramêtre de la fonction de manière statique.
 ```
-model<EXPR>
-do_nothing(EXPR.type parameter): EXPR.type 
-{ 
-	ret parameter; 
+do_nothing<EXPR>: Expression<EXPR>.type 
+{
+	ret EXPR;
 }
 ```
 Utilisation:
@@ -388,14 +386,12 @@ let num = do_nothing(42);
 ```
 #### Modèle
 Une déclaration peut servir de modèle pour d'autres. Utilisez le mot clé `impl` pour implémenter un modèle.
-
-Voici un exemple de modèle de classe qui jouera le role d'interface, et un autre modèle qui sera classe parente.
 ```
 model class Interface {
-	model method(int input): int;
+	method(int input): int;
 }
 
-model class Parent {
+class Parent {
 	construct
 	{}
 
@@ -403,28 +399,22 @@ model class Parent {
 	{}
 }
 
-impl Parent, Interface
-class Class {
+class Class ext Parent impl Interface {
 	int properties = 42
 	method(int a): int { ret 42; }
 }
 ```
 
-### Syntaxe générale
+### Tags
+
+Les tags servent a stocker des informations concernant la déclaration
+
 ```
-@tag("string")
-model<Type, Expression>
-impl Driveable
-type ptr
+@tag(IDENTIFIER, "string", 42)
 class Car { }
 ```
 
-- Les tags servent a stocker des informations concernant la déclaration
-- "export" rend accessible la déclaration depuis une importation externe
-- "model" signifit que la déclaration servira de modèle d'implémentation
-- "impl" permet d'implémenter un ou plusieurs modèles
-- "type" détermine le type de la déclaration 
-
-> Tout ces outils sont optionnels.
-
-> L'ordre d'apparition est injonctif.
+Ils peuvent être utiliser partout même dans les instructions d'une fonction
+```
+main: int exitstatus { ret @everywhere 0; }
+```
