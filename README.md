@@ -86,13 +86,12 @@ Substition aux symboles:
 ### Mot clés et identifiants réservés
 Les mots suivants sont réservés pour une utilisation syntaxique et ne peuvent pas être utilisés en tant qu'identifiant.
 
-`asm`, `bool`, `char`, `class`, `const`, `delete`, `double`, `else`, `enum`, `export`, `ext`, `float`, `global`,
+`asm`, `bool`, `break`, `char`, `class`, `const`, `continue`, `delete`, `double`, `else`, `enum`, `export`, `ext`, `float`, 
 
-`goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`, `struct`,
+`global`, `goto`, `if`, `impl`, `import`, `int`, `is`, `let`, `long`, `model`, `new`, `ptr`, `quad`, `ret`, `struct`, `throw`,
 
-`throw`, `type`, `uchar`, `uint`, `ulong`, `until`, `unstable`, `use`, `uword`, `while`,
+`type`, `uchar`, `uint`, `ulong`, `until`, `unstable`, `use`, `uword`, `while`, `word`
 
-`word`
 ### Boucle et itération
 La boucle while, vérifiant itérativement une expression vraie:
 ```
@@ -109,15 +108,13 @@ until(i >= str.length)
 }
 ```
 #### Protocoles d'itération spécifiques
-La boucle for devient une fonction relevant de l'objet concerné.
-
-Une boucle each assure que l'itération sera faite sur chacun des éléments existant avant l'appel de la fonction.
+La boucle for devient une macro relevant de l'objet concerné.
 ```
 list.for(callback);
 list.each(callback);
 ```
 ### Fonction
-Une fonction commence par son identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et un bloc d'instruction.
+Une fonction commence par un identifiant optionnellement suivit d'une liste d'arguments, optionnellement un type de retour et un bloc d'instruction.
 ```
 main(int ac, **char av): int
 {
@@ -353,12 +350,24 @@ enum Alphabet type uint
 Les énumérations comme les classes peuvent posséder des méthodes.
 Aucun outil du type variable iota (comme en Go) n'est disponible pour définir les valeurs des membres d'énumération. 
 Tout se fera manuellement.
-#### Union
+#### Struct
 ```
-type ptr union Cars { Mercedes Dacia Renault Ford }
+model struct Object
+{
+	getPosition: float3;
+}
+
+struct Entity impl Object 
+{
+	enum Type { HUMAN HORSE GOBLIN }
+
+	float3	position;
+	*char	name;
+	Type	type;
+
+	getPosition: float3 position { ret position; }
+}
 ```
-Le type de chaque membre doit correspondre au type de l'union.
-Comme l'énumération par exemple, l'union peut posséder ses propres méthodes.
 #### Template
 Les templates permettent de récuperer des types ou des expressions.
 Exemple sur une classe:
