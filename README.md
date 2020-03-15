@@ -14,13 +14,39 @@ de sémantique et d'approche algorithmique;
 ### Langage
 - Fortement typé
 - Orienté objets
-- Ignore les whitespaces & Respecte la casse
 ### Compilateur
 Voici les caractéristiques imposées par moi-même concernant le compilateur:
 - Compilation multi-passes
 - Performance dans le temps de compilation
 
 ## Spécifications proposée
+
+### Modules
+
+Importer des choses grâce à la syntaxe `use` et à la macro import
+```
+use Math = import("math");
+use { Declaration, Other } = import("./file.42");
+```
+
+### Utiliser des alias
+
+Utiliser des alias pour les types, pour les déclarations, pour les variables etc.
+
+```
+use Alias = type *char;
+
+class A { int a; int b; }
+
+func(A object) {
+
+	use {a,b} = object;
+
+	a = 10;
+	b = 20;
+}
+
+```
 
 ### Primitifs
 | Symbole      | Type numérique | Description                |
@@ -145,7 +171,7 @@ Le cast est noté sans chevrons si il s'agit d'un type primitif.
 Ecrit comme une instruction le cast change le type de la variable.
 Ecrit comme une expression le cast n'affecte pas le type de la variable, seulement le résultat de l'expression.
 ```
-let object = <Object> malloc(Object.size);
+let object = <Object> malloc(Object.size));
 ```
 Pertes d'informations successives:
 ```

@@ -8,7 +8,7 @@ const lexer_model = lexer;
 
 const state_table = build_state_table(lexer_model, 'FINAL_STATE');
 
-fs.writeFileSync("./srcs/ftlex/state_table.c", gen_c_code(state_table));
+fs.writeFileSync("./srcs/ftlang/state_table.c", gen_c_code(state_table));
 fs.writeFileSync("./includes/state_table.h", gen_c_header(state_table, ['INIT_STATE']));
 
 /*function lex( state_table )

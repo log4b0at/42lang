@@ -92,9 +92,9 @@ operators.states['^@chain']['='] = nc_optoken('^=');
 
 operators.states['.@chain'] = Object.assign( operators.states['.@chain'], range('0', '9', "float_number"));
 
-const keyword_list = ["asm", "char", "class", "const", "double", "else", "enum", "float", "if", "impl", "int", "is", "let", "long", 
-"model", "new", "ptr", "quad", "ret", "short", "static", "template", "throw", "type", "uchar", "uint", "ulong", "union", "until", 
-"ushort", "volatile", "while"];
+const keyword_list = ["asm", "bool", "break", "char", "class", "const", "continue", "delete", "double", "else", "enum", "export", "ext", "float",
+"global", "goto", "if", "impl", "import", "int", "is", "let", "long", "model", "new", "ptr", "quad", "ret", "struct", "throw",
+"type", "uchar", "uint", "ulong", "until", "unstable", "use", "uword", "while", "word"];
 
 const keywords = chains(keyword_list, identifier, element => "TOKEN_KEYWORD_"+element.toUpperCase());
 /*const operators = chains(operator_list, {}, element => "TOKEN_OPERATOR_"+element);*/
@@ -110,9 +110,10 @@ const INIT_STATE = {
 	'\r': "INIT_STATE",
 	'\f': "INIT_STATE",
 	'\v': "INIT_STATE",
-	'"': "dq_string",
-	'\'': "sq_string",
+	'"': "string",
+	'\'': "char_literal",
 	'0': "prefixed_number",
+	'@': "tag",
 	...range('1', '9', "number"),
 	default: "FINAL_STATE"
 };
@@ -129,6 +130,24 @@ module.exports = {
 	identifier_utf8_3B: { default: "identifier_utf8_2B" },
 	identifier_utf8_4B: { default: "identifier_utf8_3B" },
 
+	tag: {
+		...range('A', 'Z', "tag"),
+		...range('a', 'z', "tag"),
+		...range('0', '9', "tag"),
+		'$': "tag", // $ symbol is supported as tag part
+		/* support utf-8 tags */
+		...range( hex('C2'), hex('DF') , "tag_utf8_2B"), 
+		...range( hex('E1'), hex('EF') , "tag_utf8_3B"),
+		...range( hex('F0'), hex('F4') , "tag_utf8_4B"), 
+		
+		'_': "tag",
+		default: "TOKEN_TAG"
+	},
+
+	tag_utf8_2B: { default: "tag" },
+	tag_utf8_3B: { default: "tag_utf8_2B" },
+	tag_utf8_4B: { default: "tag_utf8_3B" },
+
 	prefixed_number: {
 		'o': "oct_number",
 		'x': "hex_number",
@@ -139,6 +158,7 @@ module.exports = {
 	
 	oct_number: {
 		...range('0', '7', "oct_number"),
+		'_': 'oct_number',
 		default: "TOKEN_OCT_NUMBER"
 	},
 	
@@ -146,72 +166,77 @@ module.exports = {
 		...range('0', '9', "hex_number"),
 		...range('A', 'F', "hex_number"),
 		...range('a', 'f', "hex_number"),
+		'_': 'hex_number',
 		default: "TOKEN_HEX_NUMBER"
 	},
 	
 	bin_number: {
 		'0': "bin_number",
 		'1': "bin_number",
+		'_': 'bin_number',
 		default: "TOKEN_BIN_NUMBER"
 	},
 	
 	number: {
 		...range('0', '9', "number"),
+		'_': 'number',
 		'.': "float_number",
-		'e': "exposant_number",
+		'e': "exponent_number",
 		default: "TOKEN_NUMBER"
 	},
 	
 	float_number: {
 		...range('0', '9', "float_number"),
-		'e': "exposant_float_number",
+		'e': "exponent_float_number",
 		default: "TOKEN_FLOAT_NUMBER"
 	},
 	
-	exposant_number: {
-		'-': "exposant_number_u",
-		...range('0', '9', "exposant_number_u"),
+	exponent_number: {
+		'-': "exponent_number_u",
+		...range('0', '9', "exponent_number_u"),
 	},
 	
-	exposant_float_number: {
-		'-': "exposant_float_number_u",
-		...range('0', '9', "exposant_float_number_u"),
+	exponent_float_number: {
+		'-': "exponent_float_number_u",
+		...range('0', '9', "exponent_float_number_u"),
 	},
 	
-	exposant_number_u: {
-		'-': "exposant_number_u",
-		...range('0', '9', "exposant_number_u"),
-		default: "TOKEN_EXPOSANT_NUMBER"
+	exponent_number_u: {
+		'-': "exponent_number_u",
+		...range('0', '9', "exponent_number_u"),
+		default: "TOKEN_EXPONENT_NUMBER"
 	},
 	
-	exposant_float_number_u: {
-		'-': "exposant_float_number_u",
-		...range('0', '9', "exposant_float_number_u"),
-		default: "TOKEN_EXPOSANT_FLOAT_NUMBER"
+	exponent_float_number_u: {
+		'-': "exponent_float_number_u",
+		...range('0', '9', "exponent_float_number_u"),
+		default: "TOKEN_EXPONENT_FLOAT_NUMBER"
 	},
 
-	dq_string: {
-		'\\': "dq_string_escape",
+	string: {
 		'"': "TOKEN_STRING",
 		'\0': "FINAL_STATE",
-		default: "dq_string"
-	},
-	
-	sq_string: {
-		'\\': "sq_string_escape",
-		'\'': "TOKEN_STRING",
-		'\0': "FINAL_STATE",
-		default: "sq_string"
-	},
-	
-	sq_string_escape: {
-		default: "sq_string"
-	},
-	
-	dq_string_escape: {
-		default: "dq_string"
+		...range( hex('C2'), hex('DF') , "string_utf8_2B"), 
+		...range( hex('E1'), hex('EF') , "string_utf8_3B"),
+		...range( hex('F0'), hex('F4') , "string_utf8_4B"),
+		default: "string"
 	},
 
+	string_utf8_2B: { default: "string" },
+	string_utf8_3B: { default: "string_utf8_2B" },
+	string_utf8_4B: { default: "string_utf8_3B" },
+
+	char_literal: {
+		'\'': "TOKEN_CHAR",
+		'\0': "FINAL_STATE",
+		default: "end_char_literal"
+	},
+
+	end_char_literal: {
+		'\'': "TOKEN_CHAR",
+		'\0': "FINAL_STATE",
+		default: "FINAL_STATE"
+	},
 	...keywords.states,
 
 	RECORD_NOTNEEDED: "marker",
@@ -276,9 +301,10 @@ module.exports = {
 	TOKEN_OCT_NUMBER: "token",
 	TOKEN_HEX_NUMBER: "token",
 	TOKEN_FLOAT_NUMBER: "token",
-	TOKEN_EXPOSANT_NUMBER: "token",
-	TOKEN_EXPOSANT_FLOAT_NUMBER: "token",
+	TOKEN_EXPONENT_NUMBER: "token",
+	TOKEN_EXPONENT_FLOAT_NUMBER: "token",
 	TOKEN_IDENTIFIER: "token",
+	TOKEN_TAG: "token",
 
 	RECORD_NOTNEEDED_TOKENS: "marker",
 
@@ -288,6 +314,7 @@ module.exports = {
 	//TOKEN_WHITESPACE: "token",
 	FORWARDLOOK_NEEDED: "marker",
 	TOKEN_STRING: "token",
+	TOKEN_CHAR: "token",
 	...nc_optokens,
 
 	RECORD_STATE: "token",

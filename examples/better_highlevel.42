@@ -1,20 +1,20 @@
-interface Object
+model class Object
 {
-	getDescription<self>: *char { ret self.getTag("description") : "No description"; }
+	global getDescription<CLASS>: *char { ret Reflect<CLASS>.getTag("description") : "No description"; }
 	
 	@inline
-	global make<CLASS, POINTER>: Interfaced<CLASS> interfaced
+	wrapModel<this, MODEL>: MODEL wrapper
 	{
-		Interfaced interfaced;
-		interfaced.value = POINTER;
-		interfaced.vtable = CLASS.vtable;
-		ret <CLASS> interfaced;
+		ModelWrapper wrapper;
+		wrapper.value = this;
+		wrapper.vtable = Reflect<TypeOf<this>>.vtable;
+		ret <MODEL> wrapper;
 	}
 	
 	@inline
-	new<CLASS, ...PARAMS>: CLASS instance
+	global instanciate<CLASS, ...PARAMS>: CLASS instance
 	{
-		const CLASS object = <CLASS> malloc(CLASS.bytesize);
+		const CLASS object = <CLASS> malloc(Reflect<CLASS>.bytesize);
 		object.construct(PARAMS);
 		ret object;
 	}
@@ -31,13 +31,15 @@ class Entity impl Object
 {
 }
 
+Entity.instanciate(
+
 class Human ext Entity
 {
 	
 }
 
 
-struct Interfaced<DECL>
+struct ModelWrapper<DECL>
 {
 	ptr vtable;
 	DECL value;

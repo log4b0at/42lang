@@ -1,10 +1,11 @@
 
-model
-class Object
+model class Object
 {
-	model toString: String
+	fictive toString<CLASS>: String
 	{
-		ret "Hey" + {50, 784, 111} + CLASS.name;
+		fictive let reflect = Reflect<CLASS>;
+		fictive let properties = String.fromArray(reflect.properties, ", ");
+		ret stringf("%s { %s }", reflect.name, properties);
 	}
 }
 
@@ -13,22 +14,22 @@ procedure(int index): int
     ret index * 6;
 }
 
-template<SIZE>
-wrap(int size): &*[SIZE]int;
+wrap<SIZE>: &[SIZE]*int;
 
-template<DEST, SRC>
-copy(ptr dest, ptr src): DEST.type;
+copy<DEST,SRC>: Reflect<DEST>.type;
 
-template<SIZE>
-alloc(int size): *[SIZE]int;
+alloc<SIZE>: *[SIZE]int;
 
-template<...AGRS>
-script MultiArgsInOnce
-print;
+print<...ARGS>
+{
+	over(ARGS){
+		printSingle($);
+	}
+}
 
 print(int arg) { let a = itoa(arg); write(1, a, len(a)); }
 
 
-&*[50]int array = wrap(50);
+&[50]*int array = wrap(50);
 
 array[0] = &HashSet<String>;
