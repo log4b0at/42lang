@@ -1,53 +1,78 @@
-SRCS_DIR	= srcs
-OBJS_DIR	= objs
-INC_DIR		= includes
-SCRIPTS_DIR	= scripts
+NAME				= ftlang.exe
+BUILD				= out
+PREBUILT			= $(BUILD)/prebuilt
+PARSER				= $(BUILD)/parser
+SRC					= src
+LIB					= lib
+GRAMMAR				= $(SRC)/lbnf/ftlang.cf
+CC					= g++
+CPPC				= g++
+LD					= g++
 
-NAME		= ftlang
-SRCS		= $(wildcard ./$(SRCS_DIR)/$(NAME)/*.c)
-OBJS		= $(subst $(SRCS_DIR),$(OBJS_DIR),$(SRCS:.c=.o))
+ARCHIVE_EXTENSION 	= tar.gz
+ARCHIVE_EXTRACTOR 	= tar -xf
+ARCHIVE_OUTPUT_OPT	= -C
 
-LEXER_NAME	= ftlex
-LEXER_SRCS	= $(wildcard ./$(SRCS_DIR)/$(LEXER_NAME)/*.c)
-LEXER_OBJS	= $(subst $(SRCS_DIR),$(OBJS_DIR),$(LEXER_SRCS:.c=.o))
+BUILD_REPO_URL		= https://github.com/log4b0at/ftlang-build
+LLVM_VERSION		= 10.0.1
+LLVM_ARCHIVE 		= $(LLVM_PREBUILT)/$(LLVM_VERSION).$(ARCHIVE_EXTENSION)
+LLVM_PREBUILT		= $(PREBUILT)/llvm
 
-2TEXT_NAME	= ft2text
-2TEXT_SRCS	= $(wildcard ./$(SRCS_DIR)/$(2TEXT_NAME)/*.c)
-2TEXT_OBJS	= $(subst $(SRCS_DIR),$(OBJS_DIR),$(2TEXT_SRCS:.c=.o))
+LLVM_BACKEND_NAME	= llvmftlang.exe
+LLVM_BACKEND_SRC	= $(SRC)/llvm
+LLVM_BACKEND_INC	= $(LLVM_BACKEND_SRC)/inc
+LLVM_BACKEND_BUILD	= $(BUILD)/llvm
+LLVM_BACKEND_LIBS	= core executionengine mcjit interpreter analysis native bitwriter
+LLVM_BACKEND_CFLAGS	= -g `$(LLVM_PREBUILT)/bin/llvm-config --cflags`
+LLVM_BACKEND_LDFLAGS = `$(LLVM_PREBUILT)/bin/llvm-config --cxxflags --ldflags --libs $(LLVM_BACKEND_LIBS) --system-libs` -L$(LLVM_PREBUILT)/lib
+LLVM_BACKEND		= $(BUILD)/$(LLVM_BACKEND_NAME)
+LLVM_BACKEND_FILES  = $(wildcard $(LLVM_BACKEND_SRC)/*.cpp) $(wildcard $(LLVM_BACKEND_SRC)/*.c)
+LLVM_BACKEND_OBJS	= $(subst $(LLVM_BACKEND_SRC),$(LLVM_BACKEND_BUILD), $(subst .c,.o,$(LLVM_BACKEND_FILES:.cpp=.o)))
 
-UTILS_SRCS	= $(wildcard ./$(SRCS_DIR)/utils/*.c)
-UTILS_OBJS	= $(subst $(SRCS_DIR),$(OBJS_DIR),$(UTILS_SRCS:.c=.o))
+RM			= rm -rf
+MV			= mv
+CP			= cp
+CD			= cd
+LN			= ln
+MKDIR		= mkdir
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
-RM			= rm -f
+all: $(BUILD)/$(NAME)
 
-all: $(SRCS_DIR)/$(LEXER_NAME)/state_table.c $(LEXER_NAME) $(2TEXT_NAME)
+# MAIN COMPILER
 
-bnfcompiler:
-	mingw32-make -C bnf
+$(BUILD)/$(NAME): $(LLVM_BACKEND)
+	$(LN) $(LLVM_BACKEND) $(BUILD)/$(NAME)
 
-$(LEXER_NAME): $(UTILS_OBJS) $(LEXER_OBJS)
-	$(CC) $(CFLAGS) $(UTILS_OBJS) $(LEXER_OBJS) -o $(LEXER_NAME)
+# LLVM BACKEND
 
-$(2TEXT_NAME): $(UTILS_OBJS) $(2TEXT_OBJS)
-	$(CC) $(CFLAGS) $(UTILS_OBJS) $(2TEXT_OBJS) -o $(2TEXT_NAME)
+$(LLVM_BACKEND): $(LLVM_BACKEND_OBJS) $(LLVM_BACKEND_BUILD) $(LLVM_PREBUILT)  # $(BUILD)/parser $(LLVM_PREBUILT)
+	$(LD) $< $(LLVM_BACKEND_LDFLAGS) -o $@
 
-$(NAME): $(UTILS_OBJS) $(OBJS)
-	$(CC) $(CFLAGS) $(UTILS_OBJS) $(OBJS) -o $(NAME)
+$(LLVM_BACKEND_BUILD)/%.o: $(LLVM_BACKEND_SRC)/%.cpp
+	$(CPPC) $(LLVM_BACKEND_CFLAGS) -I$(LIB) -I$(LLVM_BACKEND_INC) -c $< -o $@
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	$(CC) $(CFLAGS) -Ofast -c $< -o $@ -I$(INC_DIR)
+$(LLVM_BACKEND_BUILD)/%.o: $(LLVM_BACKEND_SRC)/%.c
+	$(CC) $(LLVM_BACKEND_CFLAGS) -I$(LIB) -I$(LLVM_BACKEND_INC) -c $< -o $@
 
-$(SRCS_DIR)/$(NAME)/state_table.c: $(SCRIPTS_DIR)/gen_state_table.js $(SCRIPTS_DIR)/lexer.js $(SCRIPTS_DIR)/state_machine.js
-	node ./$(SCRIPTS_DIR)/gen_state_table.js
+$(LLVM_BACKEND_BUILD):
+	$(MKDIR) -p $(LLVM_BACKEND_BUILD)
+
+# PARSER
+
+$(BUILD)/parser:
+	bnfc -m -cpp $(GRAMMAR) -o $(BUILD)/parser
+	$(CD) $(BUILD)/parser && $(MAKE)
+
+$(PREBUILT):
+	git clone $(BUILD_REPO_URL) $(PREBUILT)
+
+$(LLVM_PREBUILT): $(PREBUILT)
+	$(MKDIR) $(LLVM_PREBUILT)
+	$(ARCHIVE_EXTRACTOR) $(LLVM_ARCHIVE) $(ARCHIVE_OUTPUT_OPT) $(LLVM_PREBUILT)
 
 clean:
-	$(RM) -r $(UTILS_OBJS) $(LEXER_OBJS) $(2TEXT_OBJS) $(OBJS)
+	$(RM) $(wildcard $(BUILD)/*.o)
 
-fclean: clean
-	$(RM) $(LEXER_NAME) $(2TEXT_NAME) $(NAME)
+re:	clean all
 
-re: fclean all
-
-.PHONY: re fclean clean all
+.PHONY: all re clean

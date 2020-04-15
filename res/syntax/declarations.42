@@ -1,0 +1,57 @@
+// scope manipulation declarations 
+
+use Alias = std:vector<int>;
+use { Underlying0, Underlying1 } = Alias;
+use std:namespace:path;
+inside path:to;
+
+// class, enums
+public class C0;
+public class C1 {}
+public class C2<Type, OtherType>;
+public class C3<Type = std:vector, OtherType = std:array>;
+private class C4 inherit C0;
+private class C5 inherit C0 {}
+private class C6<Type, OtherType> inherit C0;
+private class C7<Type = std:vector, OtherType = std:array> inherit C0;
+protected model class C8;
+protected model class C9{}
+protected model class C10<Type, OtherType>;
+protected model class C11<Type = std:vector, OtherType = std:array>;
+private class C12 inherit C0 impl C8, C9, C10, C11;
+private class C13 inherit C0 impl C8, C9, C10, C11 {}
+private class C14<Type, OtherType> inherit C0 impl C8, C9, C10<Type, OtherType>, C11;
+private class C15<Type = std:vector, OtherType = std:array> inherit C0 impl C8, C9, C10<Type, OtherType>, C11;
+public class C16
+{
+	// methods
+	method0;
+	method1{}
+	method2: int;
+	method3: double{}
+	method5(int a): std:vector<int>;
+	method6(std:variadic<int> v...);
+	method7(std:variadic<int> v..., int c);
+	private method8;
+	private method9{}
+	private method10: int;
+	private method11: double{}
+	public static method13(int a): std:vector<int>;
+	protected static method14(std:variadic<int> v...);
+	protected static method15(std:variadic<int> v..., int c);
+	private const method17(int a): std:vector<int>;
+	public const method18(std:variadic<int> v...);
+	public const method19(std:variadic<int> v..., int c);
+	
+	// properties
+	prop0 int
+	prop1 local std:array<int, 4>
+	prop2 = true
+	prop3 int = 4
+	prop4 local std:array<int, 4> = array(1,2,3,4)
+	private prop5 int
+	private prop6 local std:array<int, 4>
+	protected static prop7 = true
+	protected static prop8 int = 4
+	private static prop9 local std:array<int, 4> = array(1,2,3,4)
+}

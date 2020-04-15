@@ -1,0 +1,51 @@
+
+
+main {
+	// if statements
+	if(A:b == 0 && B < 1) success();
+	if A:b == 0 && B < 1 success()
+	if A >= 1 + 2 success() else fail();
+	if (A >= 1 + 2) success() else fail()
+	if ~&-w || z || c { ret null } else null;
+	if (~&-w || z || c) null  else { ret null }
+	
+	// loops
+	while c == 0 {}
+	while (c == 0) loop();
+	do {} while (c == 0)
+	do loop() while c == 0
+	until (c == 0) {}
+	until c == 0 loop();
+	do {} until c == 0
+	do loop() until (c == 0)
+	
+	// constructors and function call
+	fibonacci(42)
+	getComponent?("entity")
+	local std:array(1, 2, 3, 4)
+	unique std:array<int, 4>(1, 2, 3, 4)
+	shared const vector<double>:make?(1, 2, 3, 4)
+	Configuration({name: "Hey", version: 17})
+	unique const Map<std:string, int>({
+		key: value,
+		key2: 1
+	})
+	
+	// variable
+	let a = 1
+	let b = 1 + 2
+	let c = array(1,2,3)
+	bool d = true
+	double c = 17.4e4
+	local array<int, 2> d = array(1, 0)
+	
+	// expression
+	~10 & 07 + (double)47 == true || e<int>() < 2 && (--z:y.x[0] 
+	<<= 1 * 2) >> 1 % 2 ^ 48 + (b *= &a);
+	
+	// lambda and other statements
+	let z = (a, b) => a * b
+	let y = a => a*a
+	let x = => this.call()
+	ret 1 + 2 * 3
+}

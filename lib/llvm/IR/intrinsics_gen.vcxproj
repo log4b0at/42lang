@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E4A97E7D-9526-3E2D-B720-C8C7340652F2}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>intrinsics_gen</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Downloads\llvm-9.0.0.src\include\llvm\IR;D:\Downloads\llvm-9.0.0.src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Downloads\llvm-9.0.0.src\include\llvm\IR;D:\Downloads\llvm-9.0.0.src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Downloads\llvm-9.0.0.src\include\llvm\IR;D:\Downloads\llvm-9.0.0.src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Downloads\llvm-9.0.0.src\include\llvm\IR;D:\Downloads\llvm-9.0.0.src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\Attributes.inc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Attributes.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+..\..\..\Debug\bin\llvm-tblgen.exe -gen-attrs -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\Debug\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Attributes.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+..\..\..\Release\bin\llvm-tblgen.exe -gen-attrs -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\Release\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Attributes.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+..\..\..\MinSizeRel\bin\llvm-tblgen.exe -gen-attrs -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\MinSizeRel\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Attributes.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+..\..\..\RelWithDebInfo\bin\llvm-tblgen.exe -gen-attrs -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Attributes.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\RelWithDebInfo\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\IntrinsicEnums.inc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building IntrinsicEnums.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+..\..\..\Debug\bin\llvm-tblgen.exe -gen-intrinsic-enums -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicEnums.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\Debug\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building IntrinsicEnums.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+..\..\..\Release\bin\llvm-tblgen.exe -gen-intrinsic-enums -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicEnums.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\Release\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building IntrinsicEnums.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+..\..\..\MinSizeRel\bin\llvm-tblgen.exe -gen-intrinsic-enums -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicEnums.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\MinSizeRel\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building IntrinsicEnums.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+..\..\..\RelWithDebInfo\bin\llvm-tblgen.exe -gen-intrinsic-enums -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicEnums.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\RelWithDebInfo\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\IntrinsicImpl.inc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building IntrinsicImpl.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+..\..\..\Debug\bin\llvm-tblgen.exe -gen-intrinsic-impl -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicImpl.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\Debug\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building IntrinsicImpl.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+..\..\..\Release\bin\llvm-tblgen.exe -gen-intrinsic-impl -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicImpl.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\Release\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building IntrinsicImpl.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+..\..\..\MinSizeRel\bin\llvm-tblgen.exe -gen-intrinsic-impl -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicImpl.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\MinSizeRel\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building IntrinsicImpl.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+..\..\..\RelWithDebInfo\bin\llvm-tblgen.exe -gen-intrinsic-impl -I D:/Downloads/llvm-9.0.0.src/include/llvm/IR -I D:/Downloads/llvm-9.0.0.src/include D:/Downloads/llvm-9.0.0.src/include/llvm/IR/Intrinsics.td -o D:/Downloads/llvm-9.0.0.src/include/llvm/IR/IntrinsicImpl.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\RelWithDebInfo\bin\llvm-tblgen.exe;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Intrinsics.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAArch64.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsAMDGPU.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsARM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsBPF.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsHexagon.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsMips.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsNVVM.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsPowerPC.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsRISCV.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsSystemZ.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsWebAssembly.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsX86.td;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicsXCore.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\SDNodeProperties.td;D:\Downloads\llvm-9.0.0.src\include\llvm\CodeGen\ValueTypes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Option\OptParser.td;D:\Downloads\llvm-9.0.0.src\include\llvm\TableGen\SearchableTable.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GenericOpcodes.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\RegisterBank.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\SelectionDAGCompat.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\GlobalISel\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\Target.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetCallingConv.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetInstrPredicate.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetItinerary.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetPfmCounters.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSchedule.td;D:\Downloads\llvm-9.0.0.src\include\llvm\Target\TargetSelectionDAG.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\71266d9723f014a899d9bf4d85d2ffe8\intrinsics_gen.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\Attributes.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicEnums.inc;D:\Downloads\llvm-9.0.0.src\include\llvm\IR\IntrinsicImpl.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/Downloads/llvm-9.0.0.src -BD:/Downloads/llvm-9.0.0.src --check-stamp-file D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/Downloads/llvm-9.0.0.src -BD:/Downloads/llvm-9.0.0.src --check-stamp-file D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/Downloads/llvm-9.0.0.src -BD:/Downloads/llvm-9.0.0.src --check-stamp-file D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/Downloads/llvm-9.0.0.src -BD:/Downloads/llvm-9.0.0.src --check-stamp-file D:/Downloads/llvm-9.0.0.src/include/llvm/IR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Downloads\llvm-9.0.0.src\ZERO_CHECK.vcxproj">
+      <Project>{808B5C04-727C-3B51-B9F3-48370052A76E}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\Downloads\llvm-9.0.0.src\utils\TableGen\llvm-tblgen.vcxproj">
+      <Project>{A34E4BEC-4AE0-3759-A127-AE660005977C}</Project>
+      <Name>llvm-tblgen</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

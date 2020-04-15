@@ -1,0 +1,207 @@
+entrypoints				Fields;
+
+Program.				Fields ::= [Field];
+
+Class.					Field ::= Privacy ClassDeclaration;
+Enum.					Field ::= Privacy EnumDeclaration;
+Property.				Field ::= Privacy Stability Ident PropertyDeclaration;
+Function.				Field ::= Privacy Stability Ident FunctionDeclaration;
+FunctionModel.			Field ::= Privacy "model" Stability Ident FunctionDeclaration;
+ClassModel.				Field ::= Privacy "model" ClassDeclaration;
+EnumModel.				Field ::= Privacy "model" EnumDeclaration;
+
+Use. 					Field ::= Privacy UseSpecifier;
+Inside.					Field ::= Privacy "inside" [ReferenceMember];
+Tagged.					Field ::= [Tag] Field;
+
+(:).					[Field] ::= Field [Field];
+terminator				Field ";";
+
+BasicClass.				ClassDeclaration ::= "class" Ident Template InheritSpecifier ImplSpecifier "{" [ClassMember] "}";
+VoidClass.				ClassDeclaration ::= "class" Ident Template InheritSpecifier ImplSpecifier;
+ClassMethod.			ClassMember ::= Privacy Context Stability Ident FunctionDeclaration;
+ClassProperty.			ClassMember ::= Privacy Context Stability Ident PropertyDeclaration;
+ClassUseSpecifier.		ClassMember ::= Privacy UseSpecifier;
+_.						ClassMember ::= ClassMember ";";
+terminator				ClassMember "";
+
+BasicEnum.				EnumDeclaration ::= "enum" Ident Template InheritSpecifier ImplSpecifier "{" [EnumMember] "}";
+VoidEnum.				EnumDeclaration ::= "enum" Ident Template InheritSpecifier ImplSpecifier;
+EnumMethod.				EnumMember ::= Ident FunctionDeclaration;
+EnumFieldAutoValue.		EnumMember ::= Ident;
+EnumFieldDefinedValue.	EnumMember ::= Ident "=" Integer;
+_.						EnumMember ::= EnumMember ";";
+separator				EnumMember "";
+
+
+TypedProperty.			PropertyDeclaration ::= Type;
+TypedInitProperty.		PropertyDeclaration ::= Type "=" Exp;
+InitProperty.			PropertyDeclaration ::= "=" Exp;
+
+TypedFunction.			FunctionDeclaration ::= "(" [FunctionArgument] ")" ":" Type Block;
+VoidFunction.			FunctionDeclaration ::= "(" [FunctionArgument] ")" Block;
+TypedNoArgFunction.		FunctionDeclaration ::= ":" Type Block;
+VoidNoArgFunction.		FunctionDeclaration ::= Block;
+
+BasicArgument.			FunctionArgument ::= Type Ident;
+ListArgument.			FunctionArgument ::= Type Ident "...";
+separator nonempty		FunctionArgument ",";
+
+UseReference.			UseSpecifier ::= "use" [ReferenceMember];
+UseDecomposeAliases.	UseSpecifier ::= "use" "{" [Ident] "}" "=" [ReferenceMember];
+UseAlias.				UseSpecifier ::= "use" Ident "=" [ReferenceMember];
+separator nonempty		Ident ",";
+
+PublicPrivacy.			Privacy ::= "public";
+PrivatePrivacy.			Privacy ::= "private";
+ProtectedPrivacy.		Privacy ::= "protected";
+DefaultPrivacy.			Privacy ::= ;
+
+Inherit.				InheritSpecifier ::= "inherit" [ReferenceMember];
+NoInherit.				InheritSpecifier ::= ;
+
+Impl.					ImplSpecifier ::= "impl" [[ReferenceMember]];
+NoImpl.					ImplSpecifier ::= ;
+
+NoTemplate.				Template ::= ;
+BasicTemplate.			Template ::= "<" [TemplateMember] ">";
+BasicTemplateMember.	TemplateMember ::= Ident;
+DefaultTemplateMember.	TemplateMember ::= Ident "=" [ReferenceMember];
+separator nonempty		TemplateMember ",";
+
+BasicTag.				Tag ::= TagIdent;
+ParametricTag.			Tag ::= TagIdent "(" [Exp17] ")";
+separator nonempty		Tag "";
+
+
+VoidBlock.				Block ::= ";";
+BasicBlock.				Block ::= "{" [Statement] "}" ;
+
+If.						Statement ::= "if" Exp Statement;
+IfNoElse.				Statement ::= "if" Exp Statement ";";
+IfElse.					Statement ::= "if" Exp Statement "else" Statement;
+While.					Statement ::= "while" Exp Statement;
+DoWhile.				Statement ::= "do" Statement "while" Exp;
+Until.					Statement ::= "until" Exp Statement;
+DoUntil.				Statement ::= "do" Statement "until" Exp;
+TypedVariable.			Statement ::= Type Ident "=" Exp;
+LetVariable.			Statement ::= "let" Ident "=" Exp;
+BlockStatement.			Statement ::= "{" [Statement] "}";
+UseStatement.			Statement ::= UseSpecifier;
+ExpressionStatement.	Statement ::= Exp2;
+ReturnStatement.		Statement ::= "ret" Exp;
+
+(:).					[Statement] ::= Statement [Statement];
+terminator				Statement ";";
+
+Comma.					Exp   ::= Exp "," Exp1;
+Lambda.	  				Exp1  ::= Exp17 "=>" Exp1;
+LambdaNoArg.	  		Exp1  ::= "=>" Exp1;
+Assign.					Exp2  ::= Exp15 "=" Exp2;
+AssignMul. 				Exp2  ::= Exp15 "*=" Exp2;
+AssignDiv. 				Exp2  ::= Exp15 "/=" Exp2;
+AssignMod. 				Exp2  ::= Exp15 "%=" Exp2;
+AssignAdd. 				Exp2  ::= Exp15 "+=" Exp2;
+AssignSub. 				Exp2  ::= Exp15 "-=" Exp2;
+AssignLeft.				Exp2  ::= Exp15 "<<=" Exp2;
+AssignRight.			Exp2  ::= Exp15 ">>=" Exp2;
+AssignAnd. 				Exp2  ::= Exp15 "&=" Exp2;
+AssignXor. 				Exp2  ::= Exp15 "^=" Exp2;
+AssignOr.  				Exp2  ::= Exp15 "|=" Exp2;
+LogicOr.				Exp4  ::= Exp4 "||" Exp5;
+LogicAnd.  				Exp5  ::= Exp5 "&&" Exp6;
+BinaryOr.  				Exp6  ::= Exp6 "|" Exp7;
+BinaryXor. 				Exp7  ::= Exp7 "^" Exp8;
+BinaryAnd. 				Exp8  ::= Exp8 "&" Exp9;
+Equal.	 				Exp9  ::= Exp9 "==" Exp10;
+NotEqual.  				Exp9  ::= Exp9 "!=" Exp10;
+Less.	  				Exp10 ::= Exp10 " <" Exp11;
+Greater.				Exp10 ::= Exp10 ">" Exp11;
+LessEqual. 				Exp10 ::= Exp10 "<=" Exp11;
+GreaterEqual.			Exp10 ::= Exp10 ">=" Exp11;
+ShiftLeft. 				Exp11 ::= Exp11 "<<" Exp12;
+ShiftRight.				Exp11 ::= Exp11 ">>" Exp12;
+Add.					Exp12 ::= Exp12 "+" Exp13;
+Sub.					Exp12 ::= Exp12 "-" Exp13;
+Mul.					Exp13 ::= Exp13 "*" Exp14;
+Div.					Exp13 ::= Exp13 "/" Exp14;
+Mod.					Exp13 ::= Exp13 "%" Exp14;
+Cast.	  				Exp14 ::= "(" Type ")" Exp14;
+PreInc.					Exp15 ::= "++" Exp15;
+PreDec.					Exp15 ::= "--" Exp15;
+Not.					Exp15 ::= "!" Exp14;
+Negate.					Exp15 ::= "-" Exp14;
+Plus.	  				Exp15 ::= "+" Exp14;
+Complement.				Exp15 ::= "~" Exp14;
+Address.				Exp15 ::= "&" Exp14;
+Access.					Exp16 ::= Exp16 "[" Exp "]" ;
+VoidCall.				Exp16 ::= Exp16 "(" ")";
+Call.					Exp16 ::= Exp16 "(" [Exp1] ")";
+Select.					Exp16 ::= Exp16 "." Ident;
+PostInc.				Exp16 ::= Exp16 "++";
+PostDec.				Exp16 ::= Exp16 "--";
+StructCall.				Exp16 ::= Exp16 "(" "{" [StructMember] "}" ")";
+TypeExpr.				Exp17 ::= Type;
+StringExpr.	 	 		Exp17 ::= String;
+IntegerExpr.	 	 	Exp17 ::= Integer;
+FloatExpr.	 		 	Exp17 ::= Float;
+HexExpr.		 	 	Exp17 ::= Hexadecimal;
+OctalExpr.		 	 	Exp17 ::= Octal;
+TrueExpr.	 		 	Exp17 ::= "true";
+FalseExpr.	 		 	Exp17 ::= "false";
+NullExpr.	 		 	Exp17 ::= "null";
+
+separator nonempty		Exp1 ",";
+separator nonempty		Exp17 ",";
+coercions				Exp 17;
+
+KeyValuePair.			StructMember ::= Ident ":" Exp1;
+separator           	StructMember ",";
+
+BasicMember.			ReferenceMember ::= Ident;
+TemplatedMember.		ReferenceMember ::= Ident "<" [TemplateArgument] ">";
+separator nonempty		ReferenceMember ":";
+separator nonempty		[ReferenceMember] ",";
+
+rules					TemplateArgument ::= "u8" | "u16" | "u32" | "u64" | "u128" | "u256" | "u512" | "s8" | "s16" | "s32" | "s64" | "s128" | "s256" | "s512" | "f8" | "f16" | "f32" | "f64" | "f128" | "f256" | "f512";
+rules					TemplateArgument ::= "bool" | "uchar" | "byte" | "ushort" | "uint" | "ulong" |  "ullong" | "char" | "short" | "int" | "long" | "llong" | "float" | "double";
+ReferenceTemplateArg.	TemplateArgument ::= [ReferenceMember];
+IntegerTemplateArg.		TemplateArgument ::= Integer;
+separator				TemplateArgument ",";
+
+rules					Type ::= "u8" | "u16" | "u32" | "u64" | "u128" | "u256" | "u512" | "s8" | "s16" | "s32" | "s64" | "s128" | "s256" | "s512" | "f8" | "f16" | "f32" | "f64" | "f128" | "f256" | "f512";
+rules					Type ::= "bool" | "uchar" | "byte" | "ushort" | "uint" | "ulong" |  "ullong" | "char" | "short" | "int" | "long" | "llong" | "float" | "double";
+ReferenceType.			Type ::= Ownership Mutability Stability [ReferenceMember] Nullability;
+
+Nullable.				Nullability ::= "?";
+DefaultNullability.		Nullability ::= ;
+
+SharedOwnership.		Ownership ::= "shared";
+LocalOwnership.			Ownership ::= "local";
+UniqueOwnership.		Ownership ::= "unique";
+WeakOwnership.			Ownership ::= "weak";
+DefaultOwnership.		Ownership ::= ;
+
+ConstMutability.		Mutability ::= "const";
+MutableMutability.		Mutability ::= "mutable";
+DefaultMutability.		Mutability ::= ;
+
+Unstable.				Stability ::= "unstable";
+Stable.					Stability ::= ;
+
+StaticContext. 			Context ::= "static";
+DynamicContext. 		Context ::= "dynamic";
+ConstContext.			Context ::= "const";
+DefaultContext. 		Context ::= ;
+
+token					TagIdent '@' letter (letter | digit | '_')*;
+token					Hexadecimal '0' ('x'|'X') (digit | ["abcdef"] | ["ABCDEF"])+;
+token					Octal '0'["01234567"]*;
+token					Float (((digit+ '.')|('.' digit+))(('e'|'E') ('-')? digit+)?) | (digit+ ('e'|'E') ('-')? digit+)|(digit+ '.' digit+ 'E' ('-')? digit+);
+
+comment					"//" ;
+comment					"/*" "*/";
+
+-- Internal Rules -- these should not be considered has a part of the grammar
+
+internal TypedExp.		Exp   ::= Exp Type;

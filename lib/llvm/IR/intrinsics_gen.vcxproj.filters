@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\Attributes.inc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\IntrinsicEnums.inc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\8363ea899c1e9f1e13f7711dd96652e7\IntrinsicImpl.inc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\CMakeFiles\71266d9723f014a899d9bf4d85d2ffe8\intrinsics_gen.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Downloads\llvm-9.0.0.src\include\llvm\IR\CMakeFiles\intrinsics_gen" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{7AF2F9A0-F0D1-3435-A6E7-8AF7553FF73B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
